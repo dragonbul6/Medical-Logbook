@@ -9,7 +9,9 @@ module.exports = {
         let token = req.headers["token"];
     
         if(!token){
-            return res.status(401).json({ auth: false, message: 'No token provided.' });
+            return res.status(401).send(`<h1>ไม่มี token </h1><br><br/><h2>1. /api/create สมัคร แนบ username,password ใน body</h2>
+            <h2>2. /api/login เข้าระบบ แนบบ username,password ผ่าน body ถ้าผ่านจะได้ token แล้วเอาไปยัดใส่ใน headers ตั้งชื่อตัวแปรว่า token<br></br>
+            <h2>3. ลองเข้า main route นั้นคือ / `);
         }else{
             let decoded = jwt.decode(token,Indicator.KEY);
             
