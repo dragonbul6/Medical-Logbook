@@ -11,7 +11,7 @@ exports.onCreate = (req,res,next) => {
             password: password
         };
        
-
+        
         let user = new userModel(data);
 
         user.save((err,result) => {
@@ -47,6 +47,6 @@ exports.Oauth =  (req,res,next) => {
                 res.json({status:"error", message: "Invalid email/password!!!", data:null});
             }
         }
-    })
+    });
 }
    

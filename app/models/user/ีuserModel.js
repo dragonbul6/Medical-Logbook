@@ -1,5 +1,5 @@
 const moongoose = require('mongoose');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 
 const Schema = moongoose.Schema;
 
