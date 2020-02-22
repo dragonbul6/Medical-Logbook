@@ -52,7 +52,7 @@ exports.Oauth =  (req,res,next) => {
    
 
 exports.onReads = (req,res) => {
-    userModel.findOne({},(err,doc)=>{
+    userModel.find({},(err,doc)=>{
         if(err) {
             console.log(err);
         }
@@ -63,7 +63,7 @@ exports.onReads = (req,res) => {
 }
 
 exports.onRead = (req,res) => {
-    let {_id} = req.params.id;
+    let {_id} = req.params;
 
     userModel.findOne({_id:_id},(err,doc) => {
         if(err){
@@ -74,7 +74,7 @@ exports.onRead = (req,res) => {
 }
 
 exports.onDelete = (req,res) => {
-    let {_id} = req.params.id;
+    let {_id} = req.params;
 
     userModel.findByIdAndDelete(_id,(err,doc) => {
         if(err){
@@ -85,7 +85,7 @@ exports.onDelete = (req,res) => {
 }
 
 exports.onUpdate = (req,res) => {
-    let {_id} = req.params.id;
+    let {_id} = req.params;
     userModel.findByIdAndUpdate(_id,req.body,(err,doc) => {
         if(err){
             res.status(400).json({msg:'Have an error'});
