@@ -63,7 +63,7 @@ exports.onReads = (req,res) => {
 }
 
 exports.onRead = (req,res) => {
-    let {_id} = req.params;
+    let {_id} = req.query;
 
     userModel.findById(_id,(err,doc) => {
         if(err){
@@ -74,7 +74,7 @@ exports.onRead = (req,res) => {
 }
 
 exports.onDelete = (req,res) => {
-    let {_id} = req.params;
+    let {_id} = req.query;
 
     userModel.findByIdAndDelete(_id,(err,doc) => {
         if(err){
@@ -85,7 +85,7 @@ exports.onDelete = (req,res) => {
 }
 
 exports.onUpdate = (req,res) => {
-    let {_id} = req.params;
+    let {_id} = req.query;
     userModel.findByIdAndUpdate(_id,req.body,(err,doc) => {
         if(err){
             res.status(400).json({msg:'Have an error'});
