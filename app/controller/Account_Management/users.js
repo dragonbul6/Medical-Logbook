@@ -51,7 +51,7 @@ exports.Oauth =  (req,res,next) => {
 };
    
 
-exports.onRead = (req,res) => {
+exports.onReads = (req,res) => {
     userModel.findOne({},(err,doc)=>{
         if(err) {
             console.log(err);
@@ -62,7 +62,7 @@ exports.onRead = (req,res) => {
     })
 }
 
-exports.onReads = (req,res) => {
+exports.onRead = (req,res) => {
     let {_id} = req.params.id;
 
     userModel.findOne({_id:_id},(err,doc) => {
