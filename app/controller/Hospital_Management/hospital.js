@@ -34,7 +34,7 @@ module.exports = {
                 if(err){
                     res.status(400).json({msg:'not found'});
                 }
-                res.status(200).json({msg:'delete '+doc._id})
+                res.status(200).json({msg:'delete '+doc._id});
             
         })
     },
@@ -43,7 +43,7 @@ module.exports = {
             if(err){
                 res.status(400).json({msg:'not found'});
             }
-            res.status(200).json(doc)
+            res.status(200).json(doc);
         })
     },
     getSpecific : (req,res) => {
@@ -53,7 +53,7 @@ module.exports = {
             if(err){
                 res.status(400).json({msg:'not found'});
             }
-            res.status(200).json({msg:'delete '+doc._id})
+            res.status(200).json(doc)
         })
     }
 
