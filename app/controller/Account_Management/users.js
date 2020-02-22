@@ -65,7 +65,7 @@ exports.onReads = (req,res) => {
 exports.onRead = (req,res) => {
     let {_id} = req.params;
 
-    userModel.findOne({_id:_id},(err,doc) => {
+    userModel.findById(_id,(err,doc) => {
         if(err){
           res.status(401).json({msg:'ไม่พบผู้ใช้'});
         }
