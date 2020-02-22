@@ -21,7 +21,7 @@ exports.onCreate = (req,res,next) => {
                 res.json({status:true,message:"User added"});
             }
         });
-    }
+    };
 
 exports.Oauth =  (req,res,next) => {
     let {username,password} = req.body;
@@ -48,5 +48,49 @@ exports.Oauth =  (req,res,next) => {
             }
         }
     });
-}
+};
    
+
+exports.onRead = (req,res) => {
+    userModel.findOne({},(err,doc)=>{
+        if(err) {
+            console.log(err);
+        }
+
+        res.status(200).json(doc)
+
+    })
+}
+
+exports.onReads = (req,res) => {
+    let {_id} = req.params.id;
+
+    userModel.findOne({_id:_id},(err,doc) => {
+        if(err){
+          res.status(401).json({msg:'ไม่พบผู้ใช้'});
+        }
+        res.status(200).json(doc);
+    });;
+}
+
+exports.onDelete = (req,res) => {
+    let {_id} = req.params.id;
+
+    userModel.findByIdAndDelete(_id,(err,doc) => {
+        if(err){
+            res.status(401).json({msg:'ไม่พบผู้ใช้'});
+        }
+        res.status(200).json({msg:'delete '+doc._id})
+    });
+}
+
+exports.onUpdate = (req,res) => {
+    let {_id} = req.params.id;
+    userModel.findByIdAndUpdate(_id,req.body,(err,doc) => {
+        if(err){
+            res.status(400).json({msg:'Have an error'});
+        }else{
+            res.status(200).json(doc)
+        }
+    })
+}
