@@ -4,14 +4,9 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jwt-simple');
 
 exports.onCreate = (req,res,next) => {
-        let {username,password} = req.body;
-        let data = {};
-        data= {
-            username: username,
-            password: password
-        };
-       
         
+        let data = req.body;
+
         let user = new userModel(data);
 
         user.save((err,result) => {
@@ -70,7 +65,7 @@ exports.onRead = (req,res) => {
           res.status(401).json({msg:'ไม่พบผู้ใช้'});
         }
         res.status(200).json(doc);
-    });;
+    });
 }
 
 exports.onDelete = (req,res) => {
