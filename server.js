@@ -9,11 +9,12 @@ const PORT = process.env.PORT || 3000
 //Middleware
 const middleware = require('./helper/middleware/checkAuth')
 
-//routes 
+//import routes 
 const userRoutes = require('./routes/userRoutes')
 const hospitalRoutes = require('./routes/hospitalRoutes');
+const problemRoutes = require('./routes/problemRoutes');
 
-
+//helpers
 const app = express();
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
@@ -23,11 +24,15 @@ app.get('/',middleware.verifyToken,(req,res)=>{
  res.json({"msg" : "Authenticated"});
 });
 
+//routes 
 userRoutes(app);
 hospitalRoutes(app);
+problemRoutes(app);
 
+//database connection
 dbConnection();
 
+//listen port
 app.listen(PORT, ()=>{ 
     console.log('[Server] Node server listening on '+PORT);
 });
