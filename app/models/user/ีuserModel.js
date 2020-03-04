@@ -15,7 +15,11 @@ let UserSchema = new Schema({
         goals : [{
             goalDetail:{type:String,default:null},
             goalStatus:{type:Boolean,default:false}
-        }]
+        }],
+        advisor:{type:String,default:null}
+    },
+    functionUser : {
+        studentCares : [{student_id : {type:String,default:null}}]
     }
 });
 
