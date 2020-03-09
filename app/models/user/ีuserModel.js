@@ -8,19 +8,20 @@ let UserSchema = new Schema({
         username : {type:String,required:true},
         password: {type:String,required:true},
         lastlogin : {type:Date,default: null},
-    
-    accountDetail: {
         role:{type:String,default:null},
-        name : {type:String,default:null},
-        goals : [{
-            goalDetail:{type:String,default:null},
-            goalStatus:{type:Boolean,default:false}
-        }],
-        advisor:{type:String,default:null}
-    },
-    functionUser : {
-        studentCares : [{student_id : {type:String,default:null}}]
-    }
+            studentInfo:{
+                student_name : {type:String,default:null},
+                student_goals : [{
+                    goalDetail:{type:String,default:null},
+                    goalStatus:{type:Boolean,default:false}
+                }],
+                student_advisor:{type:String,default:null},
+                student_id:{type:String,default:null}
+                        },
+            advisorInfo : {
+                    advisor_name : {type:String,default:null},
+                    advisor_studentCase : [{student_id : {type:String,default:null}}]
+                }
 });
 
 UserSchema.pre('save',function (next){
