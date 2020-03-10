@@ -55,7 +55,7 @@ exports.onReads = (req,res) => {
         res.status(200).json(doc)
 
     })
-}
+};
 
 exports.onRead = (req,res) => {
     let {_id} = req.query;
@@ -66,7 +66,7 @@ exports.onRead = (req,res) => {
         }
         res.status(200).json(doc);
     });
-}
+};
 
 exports.onDelete = (req,res) => {
     let {_id} = req.query;
@@ -77,7 +77,7 @@ exports.onDelete = (req,res) => {
         }
         res.status(200).json({msg:'delete '+doc._id})
     });
-}
+};
 
 exports.onUpdate = (req,res) => {
     let {_id} = req.query;
@@ -86,6 +86,18 @@ exports.onUpdate = (req,res) => {
             res.status(400).json({msg:'Have an error'});
         }else{
             res.status(200).json(doc)
+        }
+    })
+};
+
+exports.ongetRole = (req,res) => {
+    let {role} = req.query;
+    
+    userModel.find({role:role},(err,doc) => {
+        if(err){
+            res.status(400).json({msg:'Have an error'});
+        }else{
+            res.status(200).send(doc)
         }
     })
 }

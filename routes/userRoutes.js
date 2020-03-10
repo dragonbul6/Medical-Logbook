@@ -9,8 +9,10 @@ module.exports = (app)=>{
     app.post(path+`create`,userController.onCreate);
     app.get(path+`all`,userController.onReads);
     app.get(path,userController.onRead);
+    app.get(path+'role/',userController.ongetRole);
     app.put(path+'update/',userController.onUpdate);
     app.delete(path+`delete/`,userController.onDelete);
+    
    
 
 }
