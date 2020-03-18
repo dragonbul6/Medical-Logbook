@@ -13,6 +13,7 @@ const middleware = require('./helper/middleware/checkAuth')
 const userRoutes = require('./routes/userRoutes')
 const hospitalRoutes = require('./routes/hospitalRoutes');
 const problemRoutes = require('./routes/problemRoutes');
+const mobileRoutes = require('./routes/mobileRoutes');
 
 //helpers
 const app = express();
@@ -28,6 +29,7 @@ app.get('/',middleware.verifyToken,(req,res)=>{
 userRoutes(app);
 hospitalRoutes(app);
 problemRoutes(app);
+mobileRoutes(app);
 
 //database connection
 dbConnection();
