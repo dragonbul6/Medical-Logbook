@@ -14,7 +14,8 @@ const userRoutes = require('./routes/userRoutes')
 const hospitalRoutes = require('./routes/hospitalRoutes');
 const problemRoutes = require('./routes/problemRoutes');
 const mobileRoutes = require('./routes/mobileRoutes');
-const categoryRoutes = require('./routes/categoryRoutes')
+const categoryRoutes = require('./routes/categoryRoutes');
+const postRoutes = require('./routes/postRoutes');
 
 //helpers
 const app = express();
@@ -32,6 +33,7 @@ hospitalRoutes(app);
 problemRoutes(app);
 mobileRoutes(app);
 categoryRoutes(app);
+postRoutes(app);
 
 //database connection
 dbConnection();

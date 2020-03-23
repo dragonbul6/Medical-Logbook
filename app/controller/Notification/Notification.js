@@ -22,7 +22,7 @@ const PUSHTOKEN = [];
             messages.push({
                 to: pushToken,
                 sound: 'default',
-                body: 'This is a test notification',
+                body: 'มีคน post แหละ',
                 data: { withSome: 'data' },
             });
         }

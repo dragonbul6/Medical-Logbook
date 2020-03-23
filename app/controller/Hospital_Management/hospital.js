@@ -25,7 +25,7 @@ module.exports = {
             }else{
                 res.status(200).json(doc);
             }
-        })
+        });
     },
     delete : (req,res) => {
         let hosid = req.query._id;
