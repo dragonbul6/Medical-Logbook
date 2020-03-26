@@ -20,7 +20,9 @@ let UserSchema = new Schema({
                         },
             advisorInfo : {
                     advisor_name : {type:String,default:null},
-                    advisor_studentCase : [{student_id : {type:String,default:null}}]
+                    advisor_studentCase : [{student_id : {type:String,default:null}}],
+                    receiving : {type:Boolean,default:false},
+                    deviceToken : [{type:String}]
                 }
 });
 

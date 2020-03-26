@@ -1,17 +1,25 @@
 const Post = require('../../models/post/postingModel');
+const helpers = require("../../../helper/utilize/post");
 
 module.exports = {
-    create : (req,res,next) => {
-        let data = req.body;
-
+    create : async (req,res) => {
+        let data,{student_id} = req.body;
+        
         let post = new Post(data);
-
+        post.student_id = student_id;
+        
         post.save((err,result) => {
-            if(err) next(err);
+            if(err) console.log(err);
             else{
                 res.status(200).json({status:true,message:"Posted"});
             }
-        })
+        });
+
+        //หลังจาก post จะแจกเตือนไปยัง advisor
+        helpers.getAdvisorbystudentId(student_id,(result) => helpers.getDeviceToken(result));
+       
+
+        
     },
     update : (req,res) => {
         let data = req.body;

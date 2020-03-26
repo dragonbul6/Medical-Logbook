@@ -1,15 +1,15 @@
 const {Expo} = require('expo-server-sdk');
-
+const User = require('../../models/user/ีuserModel');
 let expo = new Expo();
-const PUSHTOKEN = [];
+
 
 
  function pushNotification(token){
         
+    
         let messages = [];
-
+        let PUSHTOKEN = token;
         
-        PUSHTOKEN.push(token);
 
         //ตรวจว่า token ที่ได้รับมานั้นใช่ตัวที่ expo ต้องการมั้ย?
         for(let pushToken of PUSHTOKEN){
@@ -82,13 +82,34 @@ const PUSHTOKEN = [];
     }
 
     module.exports = {
-        pushNotification : (req,res) => {
+        EnableNotification : (req,res) => {
             
-            let {token} = req.body;
+            let {token,_id} = req.body;
+            User.findById(_id,(err,user) => {
+                if(err){
+                    res.status(400).json(err)
+                }
+                let arr = user.advisorInfo.deviceToken;
+                if(arr.length > 0){
+                    for (const i of arr) {
+                        if(i !== token){
+                            arr.push(token);
+                        }
+                    }
+                }else{
+                    arr.push(token);
+                }
+                
+               
+                user.update({"advisorInfo.deviceToken" : arr},(err,doc) => {
+                    if(err){
+                        console.log(err)
+                    }
+                })
             
-            pushNotification(token);
+            })
             
-        }
+        },
+        push : (token) => pushNotification(token)
     }
-
 

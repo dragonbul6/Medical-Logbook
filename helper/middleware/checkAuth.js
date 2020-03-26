@@ -19,7 +19,7 @@ module.exports = {
                 if(err) return res.status(500).send("There was a problem finding the user.");
                 if(!doc) return res.status(404).send("No user found.");
                 
-            })
+            });
     
             nex();
     

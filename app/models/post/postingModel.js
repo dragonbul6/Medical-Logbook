@@ -2,6 +2,7 @@ const moongoose = require('mongoose');
 const Schema = moongoose.Schema;
 
 let PostingSchema = new Schema({
+    student_id : {type:String,required:true},
     PatientProfile : {
         name : {type:String,required:false},
         HN : {type:String,required:false},
@@ -59,4 +60,4 @@ PostingSchema.pre('findOneAndUpdate',function(next){
     next();
 })
 
-module.exports = moongoose.model('Posting',PostingSchema,'Posting')
+module.exports = moongoose.model('Posting',PostingSchema,'Post')

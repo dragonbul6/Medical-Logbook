@@ -4,5 +4,5 @@ module.exports = (app) => {
 
     const path = `/api/mobile/`;
 
-    app.post(path+'pushNotification',Notifications.pushNotification);
+    app.post(path+'pushNotification',Notifications.EnableNotification);
 }
