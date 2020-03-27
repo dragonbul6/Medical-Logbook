@@ -7,18 +7,20 @@ module.exports = {
                 console.log(err);
             }        
             let advisor = result.studentInfo.student_advisor;
-            
+
             callback(advisor);
 
         });
     },
     getDeviceToken : (_id) => {
-        User.findById(_id).select("advisorInfo.deviceToken")
+        User.findById(_id).select("advisorInfo")
         .exec((err,result) => {
             if(err){
                 console.log(err)
             }else{
-                alertFunction.push(result.advisorInfo.deviceToken);
+                if(result.receiving){
+                    alertFunction.push(result.deviceToken);
+                }               
             }
             
         })
