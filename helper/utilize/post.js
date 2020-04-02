@@ -12,17 +12,18 @@ module.exports = {
 
         });
     },
-    getDeviceToken : (_id) => {
-        User.findById(_id).select("advisorInfo")
+    getDeviceToken : (name) => {
+        User.findOne({"advisorInfo.advisor_name" : name})
+        .select("advisorInfo")
         .exec((err,result) => {
             if(err){
                 console.log(err)
             }else{
-                if(result.receiving){
-                    alertFunction.push(result.deviceToken);
-                }               
-            }
-            
+                if(result.advisorInfo.receiving){
+                    alertFunction.push(result.advisorInfo.deviceToken);
+                }  
+            }  
+ 
         })
         
     }

@@ -8,12 +8,12 @@ module.exports = {
         let post = new Post(data);
         post.student_id = student_id;
         
-        post.save((err,result) => {
-            if(err) console.log(err);
-            else{
-                res.status(200).json({status:true,message:"Posted"});
-            }
-        });
+        // post.save((err,result) => {
+        //     if(err) console.log(err);
+        //     else{
+        //         res.status(200).json({status:true,message:"Posted"});
+        //     }
+        // });
 
         //หลังจาก post จะแจกเตือนไปยัง advisor
         helpers.getAdvisorbystudentId(student_id,(result) => helpers.getDeviceToken(result));

@@ -3,6 +3,7 @@ const Schema = moongoose.Schema;
 
 let PostingSchema = new Schema({
     student_id : {type:String,required:true},
+    approval : {type:Boolean,default:false},
     PatientProfile : {
         name : {type:String,required:false},
         HN : {type:String,required:false},
