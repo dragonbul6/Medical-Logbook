@@ -21,12 +21,12 @@ module.exports = {
                 try{
                     helpers.getDeviceToken(result)
                 }catch(error){
-                    res.status(402).json(util.getMsg(404042));
+                    res.status(404042).json(util.getMsg(404042));
                 }
             }
             );
         } catch (error) {
-            res.status(402).json(util.getMsg(404042));
+            res.status(404042).json(util.getMsg(404042));
         }
            
 
@@ -37,22 +37,32 @@ module.exports = {
         
     },
     update : (req,res) => {
-        let data = req.body;
+        try {
+            let data = req.body;
         let postId = req.query._id;
 
         Post.findByIdAndUpdate(postId,data,(err,result) => {
-            if(err) res.status(400).json({msg:'Have an error'});
-            else res.status(200).json(result);
+            if(err) res.status(400).json(util.getMsg(400));
+            else res.status(200).json(util.getMsg(200));
         });
+        } catch (error) {
+            res.status(40401).json(util.getMsg(40401));
+        }
+        
     },
     delete : (req,res) => {
-        let postId = req.query._id;
+        try{
+            let postId = req.query._id;
 
         Post.findByIdAndDelete(postId,(err,result)=>{
             if(err) res.status(400).json({msg:'not found'});
             
             res.status(200).json({msg:'delete '+postId});
         });
+        }catch(error){
+            res.status(404041).json(util.getMsg(404041));
+        }
+        
     },
     getall : (req,res) => {
         Post.find({})
@@ -63,14 +73,19 @@ module.exports = {
         })
     },
     getSpecific : (req,res) => {
-        let postId = req.query._id;;
+        try {
+            let postId = req.query._id;;
 
-        Hospital.findById(postId,(err,result) => {
+        Post.findById(postId,(err,result) => {
             if(err){
                 res.status(400).json({msg:'not found'});
             }
-            res.status(200).json(result)
+            res.status(200).json(util.getMsg(200))
         })
+        } catch (error) {
+            res.status(40401).json(util.getMsg(40401));
+        }
+        
     },
 
 }
