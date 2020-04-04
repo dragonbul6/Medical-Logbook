@@ -17,9 +17,9 @@ module.exports = {
                 Examination : req.body.Examination
             };
             data.PatientProfile = { 
-                name : req.body.data,
-                HN : req.body.HN,
-                Age : req.body.Age}
+                name : req.body.PatientProfile.name,
+                HN : req.body.PatientProfile.HN,
+                Age : req.body.PatientProfile.Age}
     
             let post = new Post(data);
             post.student_id = student_id;
