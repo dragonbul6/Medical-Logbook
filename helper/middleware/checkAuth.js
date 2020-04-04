@@ -1,7 +1,7 @@
-const jwt = require('jwt-simple')
-const Indicator = require('../../config/keyJWT')
-const UserSchema = require('../../app/models/user/ีuserModel')
-const util = require('../../config/message')
+const jwt = require('jwt-simple');
+const Indicator = require('../../config/keyJWT');
+const UserSchema = require('../../app/models/user/ีuserModel');
+const util = require('../../config/message');
 
 
 
@@ -39,7 +39,7 @@ module.exports = {
                     console.log(err)
                 }
                 
-                if(username.length > 0){
+                if(result.length > 0){
                     res.status(200).json(util.getMsg(20001));
                 }else{
                     next();
