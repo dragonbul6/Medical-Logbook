@@ -40,7 +40,7 @@ module.exports = {
                 }
                 
                 if(username.length > 0){
-                    res.status(20001).json(util.getMsg(20001));
+                    res.status(200).json(util.getMsg(20001));
                 }else{
                     next();
                 }
