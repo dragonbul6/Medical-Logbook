@@ -12,8 +12,8 @@ let PostingSchema = new Schema({
     Examination : {type:String,default:null},
     currentTime : {type: Date,default: Date.now},
     Diagnosis : {type:String,required:false},
-    category : {type:String,required:false},
-    problem : {type:String,required:false},
+    Category : {type:String,required:false},
+    Problem : {type:String,required:false},
     comment:[{type:Schema.Types.ObjectId, ref:'Comment'}]
 
 });
