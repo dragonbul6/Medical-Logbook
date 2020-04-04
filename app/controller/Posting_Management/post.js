@@ -16,7 +16,7 @@ module.exports = {
                 Diagnosis : req.body.Diagnosis,
                 Examination : req.body.Examination
             };
-            data.Patient_Profile = { 
+            data.PatientProfile = { 
                 name : req.body.data,
                 HN : req.body.HN,
                 Age : req.body.Age}
