@@ -13,6 +13,7 @@ let PostingSchema = new Schema({
     currentTime : {type: Date,default: Date.now},
     Diagnosis : {type:String,required:false},
     Category : {type:String,required:false},
+    Problem_list : {type:String,default:null},
     Problem : {type:String,required:false},
     Discussion : {type:String,default:null},
     comment:[{type:Schema.Types.ObjectId, ref:'Comment'}]
