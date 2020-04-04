@@ -14,6 +14,7 @@ let PostingSchema = new Schema({
     Diagnosis : {type:String,required:false},
     Category : {type:String,required:false},
     Problem : {type:String,required:false},
+    Discussion : {type:String,default:null},
     comment:[{type:Schema.Types.ObjectId, ref:'Comment'}]
 
 });
