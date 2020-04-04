@@ -9,11 +9,6 @@ module.exports = {
             
             var data = {
                 student_id : student_id,
-                PatientProfile : {
-                    name : req.body.data,
-                    HN : req.body.HN,
-                    Age : req.body.Age
-                },
                 Category : req.body.Category,
                 Problem : req.body.Problem,
                 Problem_list : req.body.Problem_list,
@@ -21,9 +16,11 @@ module.exports = {
                 Diagnosis : req.body.Diagnosis,
                 Examination : req.body.Examination
             };
-            
-            
-
+            data.Patient_Profile = { 
+                name : req.body.data,
+                HN : req.body.HN,
+                Age : req.body.Age}
+    
             let post = new Post(data);
             post.student_id = student_id;
             
