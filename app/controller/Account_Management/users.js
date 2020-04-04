@@ -18,7 +18,7 @@ exports.onCreate = (req,res,next) => {
                 }
             });
         } catch (error) {
-            res.status(40300).json(util.getMsg(40300));
+            res.status(400).json(util.getMsg(40300));
         }
        
     };
@@ -51,7 +51,7 @@ exports.Oauth =  (req,res,next) => {
         }
     });
     } catch (error) {
-        res.status(40300).json(util.getMsg(40300));
+        res.status(400).json(util.getMsg(40300));
     }
     
 };

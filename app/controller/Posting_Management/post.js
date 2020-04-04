@@ -35,12 +35,12 @@ module.exports = {
                 try{
                     helpers.getDeviceToken(result)
                 }catch(error){
-                    res.status(404042).json(util.getMsg(404042));
+                    res.status(400).json(util.getMsg(404042));
                 }
             }
             );
         } catch (error) {
-            res.status(404042).json(util.getMsg(404042));
+            res.status(400).json(util.getMsg(404042));
         }
            
 
@@ -60,7 +60,7 @@ module.exports = {
             else res.status(200).json(util.getMsg(200));
         });
         } catch (error) {
-            res.status(40401).json(util.getMsg(40401));
+            res.status(400).json(util.getMsg(40401));
         }
         
     },
@@ -74,7 +74,7 @@ module.exports = {
             res.status(200).json({msg:'delete '+postId});
         });
         }catch(error){
-            res.status(404041).json(util.getMsg(404041));
+            res.status(400).json(util.getMsg(404041));
         }
         
     },
@@ -97,7 +97,7 @@ module.exports = {
             res.status(200).json(util.getMsg(200))
         })
         } catch (error) {
-            res.status(40401).json(util.getMsg(40401));
+            res.status(400).json(util.getMsg(40401));
         }
         
     },

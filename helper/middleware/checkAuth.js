@@ -11,7 +11,7 @@ module.exports = {
             let token = req.headers["token"];
     
         if(!token){
-            return res.status(40102).json(util.getMsg(40102));
+            return res.status(400).json(util.getMsg(40102));
         }else{
             let decoded = jwt.decode(token,Indicator.KEY);
             
@@ -25,7 +25,7 @@ module.exports = {
     
         }
         } catch (error) {
-            res.status(40300).json(util.getMsg(40300));
+            res.status(400).json(util.getMsg(40300));
         }
         
       
@@ -46,7 +46,7 @@ module.exports = {
                 }
             })
         } catch (err) {
-            res.status(40300).json(util.getMsg(40300));
+            res.status(400).json(util.getMsg(40300));
         }
     }
 };
