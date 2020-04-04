@@ -1,12 +1,12 @@
 
 const userController = require('../app/controller/Account_Management/users');;
-
+const helper = require('../helper/middleware/checkAuth');
 
 module.exports = (app)=>{
     const path = `/api/user/`;
 
     app.post(path+`login`,userController.Oauth);
-    app.post(path+`create`,userController.onCreate);
+    app.post(path+`create`,helper.checkUsername,userController.onCreate);
     app.get(path+`all`,userController.onReads);
     app.get(path,userController.onRead);
     app.get(path+'role/',userController.ongetRole);

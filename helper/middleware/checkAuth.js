@@ -1,17 +1,17 @@
 const jwt = require('jwt-simple')
 const Indicator = require('../../config/keyJWT')
 const UserSchema = require('../../app/models/user/ีuserModel')
+const util = require('../../config/message')
 
 
 
 module.exports = {
     verifyToken: (req,res,nex)=>{
-        let token = req.headers["token"];
+        try {
+            let token = req.headers["token"];
     
         if(!token){
-            return res.status(401).send(`<h1>ไม่มี token </h1><br><br/><h2>1. /api/user/create สมัคร แนบ username,password ใน body</h2>
-            <h2>2. /api/user/login เข้าระบบ แนบบ username,password ผ่าน body ถ้าผ่านจะได้ token แล้วเอาไปยัดใส่ใน headers ตั้งชื่อตัวแปรว่า token<br></br>
-            <h2>3. ลองเข้า main route นั้นคือ / `);
+            return res.status(40102).json(util.getMsg(40102));
         }else{
             let decoded = jwt.decode(token,Indicator.KEY);
             
@@ -24,7 +24,29 @@ module.exports = {
             nex();
     
         }
-    
+        } catch (error) {
+            res.status(40300).json(util.getMsg(40300));
+        }
         
+      
+    },
+    checkUsername: (req,res,next) => {
+        try {
+            var {username} = req.body;
+            UserSchema.find({username},(err,result) => {
+                
+                if(err){
+                    console.log(err)
+                }
+                
+                if(username.length > 0){
+                    res.status(20001).json(util.getMsg(20001));
+                }else{
+                    next();
+                }
+            })
+        } catch (err) {
+            res.status(40300).json(util.getMsg(40300));
+        }
     }
 };

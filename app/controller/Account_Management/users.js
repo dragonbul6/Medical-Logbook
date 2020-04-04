@@ -2,24 +2,31 @@ const userModel = require('../../models/user/ีuserModel');
 const IndicateKey = require('../../../config/keyJWT');
 const bcrypt = require('bcryptjs');
 const jwt = require('jwt-simple');
+const util = require('../../../config/message')
 
 exports.onCreate = (req,res,next) => {
-        
-        let data = req.body;
+        try {
+            let data = req.body;
 
-        let user = new userModel(data);
-
-        user.save((err,result) => {
-            if(err){
-                next(err);
-            }else{
-                res.json({status:true,message:"User added"});
-            }
-        });
+            let user = new userModel(data);
+    
+            user.save((err,result) => {
+                if(err){
+                    next(err);
+                }else{
+                    res.json({status:true,message:"User added"});
+                }
+            });
+        } catch (error) {
+            res.status(40300).json(util.getMsg(40300));
+        }
+       
     };
 
 exports.Oauth =  (req,res,next) => {
-    let {username,password} = req.body;
+    
+    try {
+        var {username,password} = req.body;
     
     userModel.findOne({username:username},(err,userInfo) => {
         if(err){
@@ -43,6 +50,10 @@ exports.Oauth =  (req,res,next) => {
             }
         }
     });
+    } catch (error) {
+        res.status(40300).json(util.getMsg(40300));
+    }
+    
 };
    
 
