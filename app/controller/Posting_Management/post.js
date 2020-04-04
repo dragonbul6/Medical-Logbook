@@ -5,8 +5,25 @@ module.exports = {
     create : async (req,res) => {
        
         try {
-            let data,{student_id} = req.body;
-        
+            var {student_id} = req.body;
+            
+            var data = {
+                student_id : student_id,
+                PatientProfile : {
+                    name : req.body.data,
+                    HN : req.body.HN,
+                    Age : req.body.Age
+                },
+                Category : req.body.Category,
+                Problem : req.body.Problem,
+                Problem_list : req.body.Problem_list,
+                Discussion : req.body.Discussion,
+                Diagnosis : req.body.Diagnosis,
+                Examination : req.body.Examination
+            };
+            
+            
+
             let post = new Post(data);
             post.student_id = student_id;
             
