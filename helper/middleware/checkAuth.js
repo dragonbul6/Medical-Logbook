@@ -32,7 +32,7 @@ module.exports = {
     },
     checkUsername: (req,res,next) => {
         try {
-            var {username} = req.body;
+            var {username,password} = req.body;
             UserSchema.find({username},(err,result) => {
                 
                 if(err){
@@ -48,5 +48,6 @@ module.exports = {
         } catch (err) {
             res.status(400).json(util.getMsg(40300));
         }
-    }
+    },
+    
 };
