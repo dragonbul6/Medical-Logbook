@@ -8,24 +8,26 @@ const util = require('../../config/message');
 module.exports = {
     verifyToken: (req,res,nex)=>{
         try {
-            let token = req.headers["token"];
-    
-        if(!token){
-            return res.status(400).json(util.getMsg(40102));
-        }else{
+            let token = req.headers["authorization"];
             let decoded = jwt.decode(token,Indicator.KEY);
-            
-            UserSchema.findOne({username:decoded.id},(err,doc) => {
-                if(err) return res.status(500).send("There was a problem finding the user.");
-                if(!doc) return res.status(404).send("No user found.");
+
+            UserSchema.findById(decoded._id,(err,doc) => {
+               try {
+                if(err) return res.status(500).json(util.getMsg(50000));
                 
+                    var data = doc;
+                    req.body = data;
+
+                nex();
+               } catch (error) {
+                res.status(404).json(util.getMsg(40402));  
+               }
+               
             });
     
-            nex();
-    
-        }
+
         } catch (error) {
-            res.status(400).json(util.getMsg(40300));
+            res.status(400).json(util.getMsg(40102));
         }
         
       

@@ -12,6 +12,7 @@ module.exports = (app)=>{
     app.get(path+'role/',userController.ongetRole);
     app.put(path+'update/',userController.onUpdate);
     app.delete(path+`delete/`,userController.onDelete);
+    app.put(path+`resetPassword`,userController.resetPassword);
     
    
 

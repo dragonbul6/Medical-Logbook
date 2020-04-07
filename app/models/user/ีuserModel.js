@@ -41,4 +41,19 @@ UserSchema.pre('save',function (next){
     });
 });
 
+UserSchema.pre('findOneAndUpdate',function (next) {
+    var user = this;
+
+    bcrypt.genSalt(10,(err,salt) => {
+        if(err){
+            next(err)
+        }
+
+        bcrypt.hash(user.password,salt,(err,hash) => {
+            user.password = hash;
+            next();
+        });
+    });
+})
+
 module.exports = moongoose.model('User',UserSchema,'User');

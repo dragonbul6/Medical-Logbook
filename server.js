@@ -24,7 +24,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/',middleware.verifyToken,(req,res)=>{
- res.json({"msg" : "Authenticated"});
+ res.json({"msg" : "Authenticated" , "data" : req.body});
 });
 
 //routes 

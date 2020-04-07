@@ -33,10 +33,7 @@ exports.Oauth =  (req,res,next) => {
             next(err);
         }else{
             if(bcrypt.compareSync(password,userInfo.password)){
-                const PAYLOAD = {
-                    id : userInfo.username,
-                    expireIn : 86400
-                };
+                const PAYLOAD = userInfo;
                 const token = jwt.encode(PAYLOAD,IndicateKey.KEY);
                 const time = Date.now();
                 userModel.findByIdAndUpdate({_id:userInfo._id},{lastlogin:time},async (err,doc) => {
@@ -111,4 +108,32 @@ exports.ongetRole = (req,res) => {
             res.status(200).send(doc)
         }
     })
+}
+
+exports.resetPassword = (req,res) => {
+    try {
+        var {username,newPassword} = req.body;
+        var update = {password : newPassword};
+        userModel.findOneAndUpdate({username},update,(err,result) => {
+            if(err){
+                console.log(err)
+            }
+            try {
+                var msg = util.getMsg(200);
+                if(result.length > 0){
+                    msg.data = result;
+                }else{
+                    res.status(404).json(util.getMsg(40402));
+                }
+                
+                res.status(200).json(msg);
+            } catch (error) {
+                res.status(403).json(util.getMsg(40300));
+            }
+            
+        });
+
+    } catch (error) {
+        res.status(403).json(util.getMsg(40300));
+    }
 }
