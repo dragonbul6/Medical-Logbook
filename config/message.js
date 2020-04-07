@@ -19,6 +19,7 @@ msg[40107] = {code: 40107, descriptionEn: 'Please verify code', description: '�
 msg[40108] = {code: 40108, descriptionEn: 'Please verify code Token not expired ', description: 'กรุณายืนยันตัวตนให้เรียบร้อย รหัสผ่านยังไม่หมดอายุ' };
 msg[40300] = {code: 40300, descriptionEn: 'Missing or invalid parameter', description: 'ข้อมูลไม่ครบ หรือข้อมูลผิดพลาด' };
 msg[40301] = {code: 40301, descriptionEn: 'Data is duplicated', description: 'มีข้อมูลนี้อยู่แล้ว' };
+msg[40302] = {code: 40302, descriptionEn: 'Not have specific data', description: 'นักศึกษาไม่มีอาจารย์' };
 msg[40400] = {code: 40400, descriptionEn: 'Unknow URL', description: 'ไม่รู้จัก URL นี้' };
 msg[40401] = {code: 40401, descriptionEn: 'Data Not Found', description: 'ไม่พบข้อมูลที่ต้องการ' };
 msg[40402] = {code: 40402, descriptionEn: 'User Not Found', description: 'ไม่พบผู้ใช้งานในระบบ' };
