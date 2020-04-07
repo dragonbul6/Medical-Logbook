@@ -3,7 +3,7 @@ const IndicateKey = require('../../../config/keyJWT');
 const bcrypt = require('bcryptjs');
 const jwt = require('jwt-simple');
 const util = require('../../../config/message')
-const password = require('../../../helper/utilize/password')
+
 
 exports.onCreate = (req,res,next) => {
         try {

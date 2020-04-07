@@ -1,5 +1,6 @@
 const User = require('../../app/models/user/ีuserModel');
 const alertFunction = require("../../app/controller/Notification/Notification")
+const msg = require('../../config/message');
 module.exports = {
     getAdvisorbystudentId : (student_id,callback) => {
         User.findById(student_id,async (err,result) => {
@@ -19,9 +20,20 @@ module.exports = {
             if(err){
                 console.log(err)
             }else{
-                if(result.advisorInfo.receiving){
-                    alertFunction.push(result.advisorInfo.deviceToken);
-                }  
+                try {
+                    
+                    var status = result.advisorInfo.receiving;
+                    if (status) {
+                        var token = result.advisorInfo.deviceToken;
+                        alertFunction(token);
+                    }else{
+                        console.log(`advisor not recieve notification`);
+                    }
+                    
+                } catch (error) {
+                    console.log("[Expo-push_notification]",msg.getMsg(40401));
+                }
+                
             }  
  
         })

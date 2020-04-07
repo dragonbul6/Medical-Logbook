@@ -5,16 +5,16 @@ let PostingSchema = new Schema({
     student_id : {type:String,required:true},
     approval : {type:Boolean,default:false},
     PatientProfile : {
-        name : {type:String,required:false},
-        HN : {type:String,required:false},
-        Age : {type:Number,required:false},
+        name : {type:String,default:null},
+        HN : {type:String,default:null},
+        Age : {type:Number,default:null},
     },
     Examination : {type:String,default:null},
     currentTime : {type: Date,default: Date.now},
-    Diagnosis : {type:String,required:false},
-    Category : {type:String,required:false},
+    Diagnosis : {type:String,default:null},
+    Category : {type:String,default:null},
     Problem_list : {type:String,default:null},
-    Problem : {type:String,required:false},
+    Problem : {type:String,default:null},
     Discussion : {type:String,default:null},
     comment:[{type:Schema.Types.ObjectId, ref:'Comment'}]
 

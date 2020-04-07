@@ -16,7 +16,7 @@ module.exports = {
                 if(err) return res.status(500).json(util.getMsg(50000));
                 
                     var data = doc;
-                    req.body = data;
+                    req.profile = data;
 
                 nex();
                } catch (error) {
@@ -27,7 +27,7 @@ module.exports = {
     
 
         } catch (error) {
-            res.status(400).json(util.getMsg(40102));
+            res.status(401).json(util.getMsg(401));
         }
         
       
