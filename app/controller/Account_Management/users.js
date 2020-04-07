@@ -3,6 +3,7 @@ const IndicateKey = require('../../../config/keyJWT');
 const bcrypt = require('bcryptjs');
 const jwt = require('jwt-simple');
 const util = require('../../../config/message')
+const password = require('../../../helper/utilize/password')
 
 exports.onCreate = (req,res,next) => {
         try {
@@ -43,7 +44,7 @@ exports.Oauth =  (req,res,next) => {
                 });
                 res.status(200).json({message:"Login Successful!",data:{user:userInfo,token:token}});
             }else{
-                res.json({status:"error", message: "Invalid email/password!!!", data:null});
+                res.json({status:"error", message: "Invalid username/password!!!", data:null});
             }
         }
     });
@@ -113,25 +114,34 @@ exports.ongetRole = (req,res) => {
 exports.resetPassword = (req,res) => {
     try {
         var {username,newPassword} = req.body;
-        var update = {password : newPassword};
-        userModel.findOneAndUpdate({username},update,(err,result) => {
+       
+        bcrypt.hash(newPassword,10,(err,hashed) => {
+            var update = {password : hashed};
+
             if(err){
                 console.log(err)
             }
-            try {
-                var msg = util.getMsg(200);
-                if(result.length > 0){
-                    msg.data = result;
-                }else{
-                    res.status(404).json(util.getMsg(40402));
+            
+            userModel.findOneAndUpdate({username},update,(err,result) => {
+                if(err){
+                    console.log(err)
+                }
+                try {
+                    var msg = util.getMsg(200);
+                    
+                    if(result){
+                        msg.data = result;
+                        res.status(200).json(msg);
+                    }else{
+                        res.status(404).json(util.getMsg(40402));
+                    }
+                } catch (error) {
+                    res.status(403).json(util.getMsg(40300));
                 }
                 
-                res.status(200).json(msg);
-            } catch (error) {
-                res.status(403).json(util.getMsg(40300));
-            }
-            
-        });
+            });
+        })
+
 
     } catch (error) {
         res.status(403).json(util.getMsg(40300));
