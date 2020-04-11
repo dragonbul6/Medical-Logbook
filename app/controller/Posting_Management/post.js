@@ -1,6 +1,7 @@
 const Post = require('../../models/post/postingModel');
 const helpers = require("../../../helper/utilize/post");
-const util = require('../../../config/message')
+const util = require('../../../config/message');
+
 module.exports = {
     create : (req,res,next) => { 
         
@@ -73,8 +74,12 @@ module.exports = {
         .populate('comment')
         .exec((err,result) => {
             if(err) res.status(400).json({msg:'not found'});
-            res.status(200).json(result);
-        })
+            
+
+                res.status(200).json(result);
+            
+
+        });
     },
     getSpecific : (req,res) => {
         try {

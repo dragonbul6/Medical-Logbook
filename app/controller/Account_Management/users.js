@@ -27,7 +27,8 @@ exports.onCreate = (req,res,next) => {
 exports.Oauth =  (req,res,next) => {
     
     try {
-        var {username,password} = req.body;
+        var username = req.body.username;
+        var password = req.body.password;
     
     userModel.findOne({username:username},(err,userInfo) => {
         if(err){

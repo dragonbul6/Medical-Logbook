@@ -1,5 +1,6 @@
 const moongoose = require('mongoose');
 const Schema = moongoose.Schema;
+const moment = require('moment');
 
 let PostingSchema = new Schema({
     student_id : {type:String,required:true},
@@ -10,7 +11,7 @@ let PostingSchema = new Schema({
         Age : {type:Number,default:null},
     },
     Examination : {type:String,default:null},
-    currentTime : {type: Date,default: Date.now},
+    currentTime : {type: String,default: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")},
     Diagnosis : {type:String,default:null},
     Category : {type:String,default:null},
     Problem_list : {type:String,default:null},
@@ -20,16 +21,10 @@ let PostingSchema = new Schema({
 
 });
 
-PostingSchema.pre('save',function(next){
-    now = new Date();
-    this.currentTime = now;
-
-    next();
-});
 
 PostingSchema.pre('findOneAndUpdate',function(next){
-    now = new Date();
-    this.currentTime = now;
+    
+    this.currentTime = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
     next();
 })
 
