@@ -12,6 +12,7 @@ let PostingSchema = new Schema({
     },
     Examination : {type:String,default:null},
     currentTime : {type: String,default: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")},
+    Date : {type:Date,default:Date.now},
     Diagnosis : {type:String,default:null},
     Category : {type:String,default:null},
     Problem_list : {type:String,default:null},
@@ -25,6 +26,7 @@ let PostingSchema = new Schema({
 PostingSchema.pre('findOneAndUpdate',function(next){
     
     this.currentTime = moment().format("dddd, MMMM Do YYYY, h:mm:ss a");
+    this.Date = new Date();
     next();
 })
 
