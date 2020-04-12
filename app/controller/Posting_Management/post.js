@@ -89,7 +89,9 @@ module.exports = {
             if(err){
                 res.status(400).json({msg:'not found'});
             }
-            res.status(200).json(util.getMsg(200))
+            var object = util.getMsg(200);
+            object.data = result;
+            res.status(200).json(object)
         })
         } catch (error) {
             res.status(400).json(util.getMsg(40401));
