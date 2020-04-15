@@ -16,14 +16,15 @@ let UserSchema = new Schema({
                     goalStatus:{type:Boolean,default:false}
                 }],
                 student_advisor:{type:String,default:null},
-                student_id:{type:String,default:null}
+                student_id:{type:String,default:null},
+                student_year : {type:String,default:null}
                         },
             advisorInfo : {
                     advisor_name : {type:String,default:null},
-                    advisor_studentCase : [{student_id : {type:String,default:null}}],
+                    advisor_studentCase : [{type:Schema.Types.ObjectId, ref : 'User'}],
                     receiving : {type:Boolean,default:false},
                     deviceToken : [{type:String}]
-                }
+                        }
 });
 
 UserSchema.pre('save',function (next){

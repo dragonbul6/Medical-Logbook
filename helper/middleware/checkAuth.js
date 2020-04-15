@@ -51,5 +51,28 @@ module.exports = {
             res.status(400).json(util.getMsg(40300));
         }
     },
+    checkAdvisor : (req,res,next) => {
+        try {
+            var {_id} = req.query;
+            UserSchema.findById(_id,(err,result) => {
+                if(err){
+                    console.log(err)
+                    res.status(500).json(util.getMsg(50004));
+                }else{
+                    if(result){
+                        if(result.role === 'advisor'){
+                            next();
+                        }else{
+                            res.status(403).json(util.getMsg(40303));
+                        }
+                    }else{
+                        res.status(404).json(util.getMsg(40401));
+                    }
+                }
+            })
+        } catch (error) {
+            res.status(400).json(util.getMsg(40300));
+        }
+    }
     
 };

@@ -1,10 +1,11 @@
 const {Expo} = require('expo-server-sdk');
 const User = require('../../models/user/ีuserModel');
+const msg = require('../../../config/message')
 let expo = new Expo();
 
 
 
- function pushNotification(token){
+ exports.pushNotification = (token,id) => {
         
     
         let messages = [];
@@ -22,7 +23,7 @@ let expo = new Expo();
             messages.push({
                 to: pushToken,
                 sound: 'default',
-                body: 'มีคน post แหละ',
+                body: 'มีคน post: '+id,
                 data: { withSome: 'data' },
             });
         }
@@ -84,7 +85,9 @@ let expo = new Expo();
     module.exports = {
         EnableNotification : (req,res) => {
             
-            let {token,_id} = req.body;
+            try {
+                var token = req.body.token;
+                var _id = req.profile._id;
             User.findById(_id,(err,user) => {
                 if(err){
                     res.status(400).json(err)
@@ -107,9 +110,13 @@ let expo = new Expo();
                     }
                 })
             
-            })
+            });
+            } catch (error) {
+                res.status(403).json(msg.getMsg(40300));
+            }
+            
             
         },
-        push : (token) => pushNotification(token)
+        push : (token,id) => exports.pushNotification(token,id)
     }
 

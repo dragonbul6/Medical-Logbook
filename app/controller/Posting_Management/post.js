@@ -31,6 +31,7 @@ module.exports = {
                     console.log("[post creating]",err)
                 }
                 else{
+                    req.body.newPostId = result._id;
                     next();
                 }
             });

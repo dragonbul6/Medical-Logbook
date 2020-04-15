@@ -4,6 +4,7 @@ const Comment = require('../app/controller/Posting_Management/comment');
 //middleware
 const middleware = require('../helper/middleware/post');
 const helper = require('../helper/middleware/checkAuth')
+
 module.exports = (app) => {
     const path = '/api/post/';
     const pathComments = '/api/comment/';
@@ -19,5 +20,7 @@ module.exports = (app) => {
     app.post(pathComments+"create",Comment.create);
     app.put(pathComments+"update/",Comment.update);
     app.delete(pathComments+"delete/",Comment.delete);
+
+    
     
 }

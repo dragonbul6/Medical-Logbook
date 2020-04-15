@@ -13,6 +13,7 @@ module.exports = (app)=>{
     app.put(path+'update/',userController.onUpdate);
     app.delete(path+`delete/`,userController.onDelete);
     app.put(path+`resetPassword`,userController.resetPassword);
+    app.put(path+`addStudent/`,helper.checkAdvisor,userController.addStudentInAdvisorProfile);
     
    
 

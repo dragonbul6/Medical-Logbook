@@ -2,7 +2,8 @@ const userModel = require('../../models/user/ีuserModel');
 const IndicateKey = require('../../../config/keyJWT');
 const bcrypt = require('bcryptjs');
 const jwt = require('jwt-simple');
-const util = require('../../../config/message')
+const util = require('../../../config/message');
+const mongoose = require('mongoose');
 
 
 exports.onCreate = (req,res,next) => {
@@ -103,13 +104,27 @@ exports.onUpdate = (req,res) => {
 exports.ongetRole = (req,res) => {
     let {role} = req.query;
     
-    userModel.find({role:role},(err,doc) => {
-        if(err){
-            res.status(400).json({msg:'Have an error'});
-        }else{
-            res.status(200).send(doc)
-        }
-    })
+    if(role === 'advisor'){
+        userModel.find({role:role})
+        .populate("advisorInfo.advisor_studentCase")
+        .exec((err,doc) => {
+            if(err){
+                console.log(err)
+                res.status(400).json({msg:'Have an error'});
+            }else{
+                res.status(200).send(doc);
+            }    
+        })
+    }else{
+        userModel.find({role:role},(err,doc) => {
+            if(err){
+                res.status(400).json({msg:'Have an error'});
+            }else{
+                res.status(200).send(doc)
+            }
+        })
+    }
+    
 }
 
 exports.resetPassword = (req,res) => {
@@ -144,6 +159,32 @@ exports.resetPassword = (req,res) => {
         })
 
 
+    } catch (error) {
+        res.status(403).json(util.getMsg(40300));
+    }
+}
+
+exports.addStudentInAdvisorProfile = (req,res) => {
+    try {
+        var id = req.query._id;
+        var arrayStudentId = req.body.student_id;
+
+
+        for (const studentId of arrayStudentId) {
+
+            
+                userModel.findByIdAndUpdate(id,{$push:{"advisorInfo.advisor_studentCase" : studentId}},(err,result) => {
+                    if(err){
+                        console.log(err)
+                        res.status(500).json(util.getMsg(50004));
+                    }else{
+                        res.status(200).json(util.getMsg(200));
+                    }
+    
+                });
+            
+            
+        }
     } catch (error) {
         res.status(403).json(util.getMsg(40300));
     }
