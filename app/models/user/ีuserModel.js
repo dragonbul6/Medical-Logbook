@@ -9,17 +9,17 @@ let UserSchema = new Schema({
         password: {type:String,required:true},
         lastlogin : {type:Date,default: null},
         role:{type:String,default:null},
-            studentInfo:{
+        studentInfo:{
                 student_name : {type:String,default:null},
                 student_goals : [{
                     goalDetail:{type:String,default:null},
                     goalStatus:{type:Boolean,default:false}
                 }],
-                student_advisor:{type:String,default:null},
+                student_advisorId:{type:Schema.Types.ObjectId, ref : 'User'},
                 student_id:{type:String,default:null},
                 student_year : {type:String,default:null}
                         },
-            advisorInfo : {
+        advisorInfo : {
                     advisor_name : {type:String,default:null},
                     advisor_studentCase : [{type:Schema.Types.ObjectId, ref : 'User'}],
                     receiving : {type:Boolean,default:false},

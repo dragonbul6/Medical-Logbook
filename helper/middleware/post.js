@@ -5,24 +5,23 @@ var User = require('../../app/models/user/ีuserModel');
 
 exports.pushNotify = (req,res) => {
     try {
-        var name = req.profile.studentInfo.student_advisor;
+        var id = req.profile.studentInfo.student_advisorId;
         
-        User.findOne({"advisorInfo.advisor_name" : name})
+        User.findById(id)
         .select("advisorInfo")
         .exec((err,result) => {
             if(err){
                 console.log(err)
             }else{
-                try {
-                    
+                try {                 
                     var status = result.advisorInfo.receiving;
                     if (status) {
                         var token = result.advisorInfo.deviceToken;
                         var id = req.body.newPostId;
-                        helper.pushNotification(token,id)
+                        helper.pushNotification(token,id);
                         res.status(200).json(msg.getMsg(200));
                     }else{
-                        console.log(`advisor not recieve notification`);
+                        console.log(`Advisor not recieve notification`);
                         res.status(200).json(msg.getMsg(200));
                     }
                     

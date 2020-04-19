@@ -3,6 +3,7 @@ const Schema = moongoose.Schema;
 const moment = require('moment');
 
 let PostingSchema = new Schema({
+    poster : {type:String,default:null},
     student_id : {type:String,required:true},
     approval : {type:Boolean,default:false},
     PatientProfile : {

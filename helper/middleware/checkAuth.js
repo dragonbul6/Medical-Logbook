@@ -73,6 +73,6 @@ module.exports = {
         } catch (error) {
             res.status(400).json(util.getMsg(40300));
         }
-    }
+    },
     
 };

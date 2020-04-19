@@ -7,8 +7,10 @@ module.exports = {
         
         try {
             var student_id = req.profile._id;
+            var nameAuther = req.profile.studentInfo.student_name;
             
             var data = {
+                poster : nameAuther,
                 student_id : student_id,
                 Category : req.body.Category,
                 Problem : req.body.Problem,
@@ -39,8 +41,6 @@ module.exports = {
         } catch (error) {
             console.log(error)
         }
-               
-        
     },
     update : (req,res) => {
         try {
