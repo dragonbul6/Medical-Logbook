@@ -36,6 +36,10 @@ var checkNullforUpdate = (data,master) => {
         if(data.advisorInfo.advisor_name !== void 0){
             temp.advisorInfo.advisor_name = data.advisorInfo.advisor_name
         }
+
+        if(data.advisorInfo.receiving !== void 0){
+            temp.advisorInfo.receiving  = data.advisorInfo.receiving
+        }
     }
     
 
@@ -114,7 +118,7 @@ exports.LoginAdvisor = (req,res) =>{
                                 next(err);
                             }
                         });
-                        res.status(200).json({message:"Login Successful!",data:{user:userInfo,token:token}});
+                        res.status(200).json({message:"Login Successful!",data:{user:userInfo,token:token,_id:userInfo._id}});
                     }else{
                         res.json({status:"error", message: "Invalid username/password!!!", data:null});
                     }
@@ -151,7 +155,7 @@ exports.onReads = (req,res) => {
 
 exports.onRead = (req,res) => {
     let {_id} = req.query;
-
+    
     userModel.findById(_id)
     .populate('studentInfo.student_advisorId')
     .populate('advisorInfo.advisor_studentCase')

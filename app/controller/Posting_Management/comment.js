@@ -11,7 +11,7 @@ module.exports = {
                res.json({msg:'not found post'})
            }
            
-           let data = {postId : await result._id , detail};
+           let data = {postId : await result._id , detail , commenter : req.profile._id};
            let comment = new Comment(data);
 
            comment.save(async (err,result) => {

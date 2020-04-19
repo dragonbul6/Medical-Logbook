@@ -11,7 +11,8 @@ let expo = new Expo();
         let messages = [];
         let PUSHTOKEN = token;
         
-
+        
+        
         //ตรวจว่า token ที่ได้รับมานั้นใช่ตัวที่ expo ต้องการมั้ย?
         for(let pushToken of PUSHTOKEN){
             if(!Expo.isExpoPushToken(pushToken)){
@@ -20,12 +21,23 @@ let expo = new Expo();
             }
 
             //body format ของตัว expo เอง
-            messages.push({
-                to: pushToken,
-                sound: 'default',
-                body: 'มีคน post: '+id,
-                data: { withSome: 'data' },
-            });
+            
+            if(id == void 0){
+                messages.push({
+                    to: pushToken,
+                    sound: 'default',
+                    body: 'ทดสอบระบบ Notification',
+                    data: { withSome: 'data' },
+                });
+            }else{
+                messages.push({
+                    to: pushToken,
+                    sound: 'default',
+                    body: 'มีคน post: '+id,
+                    data: { withSome: 'data' },
+                });
+            }
+            
         }
 
         let chunks = expo.chunkPushNotifications(messages); //สร้างก้อนที่มี message บรรจุ
@@ -102,13 +114,14 @@ let expo = new Expo();
                 }else{
                     arr.push(token);
                 }
-                
-               
-                user.update({"advisorInfo.deviceToken" : arr},(err,doc) => {
+
+                user.updateOne({"advisorInfo.deviceToken" : arr,"advisorInfo.receiving" : true},(err,doc) => {
                     if(err){
                         console.log(err)
                     }
-                })
+                });
+
+                exports.pushNotification(arr,null);
             
             });
             } catch (error) {

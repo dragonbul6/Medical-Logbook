@@ -73,6 +73,7 @@ module.exports = {
     getall : (req,res) => {
         Post.find({})
         .populate('comment')
+        .populate('commenter')
         .exec((err,result) => {
             if(err) res.status(400).json({msg:'not found'});
             
