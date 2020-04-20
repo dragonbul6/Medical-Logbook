@@ -19,6 +19,7 @@ let PostingSchema = new Schema({
     Problem_list : {type:String,default:null},
     Problem : {type:String,default:null},
     Discussion : {type:String,default:null},
+    Location : {type:String,default:null},
     comment:[{type:Schema.Types.ObjectId, ref:'Comment'}]
 
 });
