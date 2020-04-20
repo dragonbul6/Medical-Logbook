@@ -282,14 +282,8 @@ exports.addStudentInAdvisorProfile = (req,res) => {
                 res.status(500).json(util.getMsg(50004));
             }else{
                 if(result !== void 0){
-                    var currentId = result.advisorInfo.advisor_studentCase
-    
-                    for (const Oid of arrayStudentId) {
-                        currentId.push(Oid);
-                    }
-                    
-    
-                    var query = {"advisorInfo.advisor_studentCase" : currentId}
+
+                    var query = {"advisorInfo.advisor_studentCase" : arrayStudentId}
                     
                     result.updateOne(query)
                     .exec((err,doc) => {
