@@ -15,7 +15,7 @@ let UserSchema = new Schema({
                     goalDetail:{type:String,default:null},
                     goalStatus:{type:Boolean,default:false}
                 }],
-                student_advisorId:{type:Schema.Types.ObjectId, ref : 'User'},
+                student_advisorId:{type:Schema.Types.ObjectId, ref : 'User',default:null},
                 student_id:{type:String,default:null},
                 student_year : {type:String,default:null}
                         },

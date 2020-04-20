@@ -287,6 +287,7 @@ exports.addStudentInAdvisorProfile = (req,res) => {
                     for (const Oid of arrayStudentId) {
                         currentId.push(Oid);
                     }
+                    
     
                     var query = {"advisorInfo.advisor_studentCase" : currentId}
                     
