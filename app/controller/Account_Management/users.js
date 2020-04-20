@@ -76,19 +76,24 @@ exports.Oauth =  (req,res,next) => {
         if(err){
             next(err);
         }else{
-            if(bcrypt.compareSync(password,userInfo.password)){
-                const PAYLOAD = userInfo;
-                const token = jwt.encode(PAYLOAD,IndicateKey.KEY);
-                const time = Date.now();
-                userModel.findByIdAndUpdate({_id:userInfo._id},{lastlogin:time},async (err,doc) => {
-                    if(err){
-                        next(err);
-                    }
-                });
-                res.status(200).json({message:"Login Successful!",data:{user:userInfo,token:token}});
+            if(userInfo !== void 0){
+                if(bcrypt.compareSync(password,userInfo.password)){
+                    const PAYLOAD = userInfo;
+                    const token = jwt.encode(PAYLOAD,IndicateKey.KEY);
+                    const time = Date.now();
+                    userModel.findByIdAndUpdate({_id:userInfo._id},{lastlogin:time},async (err,doc) => {
+                        if(err){
+                            next(err);
+                        }
+                    });
+                    res.status(200).json({message:"Login Successful!",data:{user:userInfo,token:token}});
+                }else{
+                    res.json({status:"error", message: "Invalid username/password!!!", data:null});
+                }
             }else{
-                res.json({status:"error", message: "Invalid username/password!!!", data:null});
+                res.status(404).json(util.getMsg(40402));
             }
+            
         }
     });
     } catch (error) {
@@ -264,35 +269,58 @@ exports.resetPassword = (req,res) => {
     }
 }
 
-exports.addStudentInAdvisorProfile = async (req,res,next) => {
+exports.addStudentInAdvisorProfile = (req,res) => {
     
     
     try {
         var id = req.query._id;
         var arrayStudentId = req.body.student_id;
-
-
-        for (const studentId of arrayStudentId) {
-
-                await userModel.findByIdAndUpdate(id,{$push:{"advisorInfo.advisor_studentCase" : studentId}},(err,result) => {
-                    if(err){
-                        console.log(err)
-                        res.status(500).json(util.getMsg(50004));
-                    }else{
-                        var query = {"studentInfo.student_advisorId" : result._id};
-                        
-                        userModel.findByIdAndUpdate(studentId,query)
-                        .exec(async (err,stResult) => {
-                            if(err){
-                                console.log(err)
-                                res.status(500).json(util.getMsg(50004));
-                            }
-                        });   
+        
+        userModel.findById(id).exec((err,result) => {
+            
+            if(err){
+                res.status(500).json(util.getMsg(50004));
+            }else{
+                if(result !== void 0){
+                    var currentId = result.advisorInfo.advisor_studentCase
+    
+                    for (const Oid of arrayStudentId) {
+                        currentId.push(Oid);
                     }
-                });      
-        }
+    
+                    var query = {"advisorInfo.advisor_studentCase" : currentId}
+                    
+                    result.updateOne(query)
+                    .exec((err,doc) => {
+                        if(err){
+                            res.status(500).json(util.getMsg(50004));
+                        }else{
+                            var queryStudent = {"studentInfo.student_advisorId" : id}
+                           
+                            userModel
+                            .find({_id : {$in: arrayStudentId}})
+                            .update(queryStudent,(err,doc2) =>{
+                                if(err){
+                                    console.log(err)
+                                }else{
+                                    res.status(200).json(util.getMsg(200));
+                                }
+                            });
 
-                        res.status(200).json(util.getMsg(200));
+                        }
+                    });
+
+                    
+                    
+    
+                }else{
+                    res.status(500).json(util.getMsg(50004));
+                }
+            }
+            
+            
+            
+        })
     } catch (error) {
         res.status(403).json(util.getMsg(40300));
     }
