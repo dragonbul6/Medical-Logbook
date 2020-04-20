@@ -13,13 +13,13 @@ module.exports = (app) => {
     app.post(path+"create",helper.verifyToken,Post.create,middleware.pushNotify);
     app.get(path+"all",Post.getall);
     app.get(path+"",Post.getSpecific);
-    app.put(path+"update/",Post.update);
-    app.delete(path+"delete/",Post.delete);
+    app.put(path+"update/",helper.verifyToken,Post.update);
+    app.delete(path+"delete/",helper.verifyToken,Post.delete);
 
         //Comments Routes;
     app.post(pathComments+"create",helper.verifyToken,Comment.create);
-    app.put(pathComments+"update/",Comment.update);
-    app.delete(pathComments+"delete/",Comment.delete);
+    app.put(pathComments+"update/",helper.verifyToken,Comment.update);
+    app.delete(pathComments+"delete/",helper.verifyToken,Comment.delete);
 
     
     

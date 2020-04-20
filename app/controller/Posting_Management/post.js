@@ -45,12 +45,31 @@ module.exports = {
     update : (req,res) => {
         try {
             let data = req.body;
-        let postId = req.query._id;
+            let postId = req.query._id;
+            var PosterId = req.profile._id;
 
-        Post.findByIdAndUpdate(postId,data,(err,result) => {
-            if(err) res.status(400).json(util.getMsg(400));
-            else res.status(200).json(util.getMsg(200));
-        });
+            Post.findById(postId).exec((err,result) => {
+                if(err){
+                    console.log(err);
+                    res.status(500).json(util.getMsg(50001));
+                }else{
+                    if(result){
+                        if(PosterId == result.student_id){
+                            result.updateOne(data).exec((err,doc) => {
+                                if(err){
+                                    console.log(err)
+                                    res.status(400).json(util.getMsg(400));
+                                }else{
+                                    res.status(200).json(util.getMsg(200));
+                                }
+                            });
+                        }else{
+                            res.status(401).json(util.getMsg(40103));
+                        }
+                    }
+                }
+            });
+
         } catch (error) {
             res.status(400).json(util.getMsg(40401));
         }
@@ -59,11 +78,31 @@ module.exports = {
     delete : (req,res) => {
         try{
             let postId = req.query._id;
+            var PosterId = req.profile._id;
 
-        Post.findByIdAndDelete(postId,(err,result)=>{
-            if(err) res.status(400).json({msg:'not found'});
-            
-            res.status(200).json({msg:'delete '+postId});
+        Post.findById(postId).exec((err,result) => {
+            if(err){
+                console.log(err);
+                res.status(500).json(util.getMsg(50001));
+            }else{
+                if(result !== void 0){
+                   if(PosterId == result.student_id){
+                    result.remove((err,doc) => {
+                        if(err){
+                         console.log(err)
+                         res.status(500).json(util.getMsg(50005));
+                            }else{
+                                res.status(200).json(util.getMsg(200));
+                            }
+                    });
+                   }else{
+                    res.status(401).json(util.getMsg(40103));
+                   }
+                   
+                }else{
+                    res.status(401).json(util.getMsg(40103));
+                }
+            }
         });
         }catch(error){
             res.status(400).json(util.getMsg(404041));

@@ -1,17 +1,18 @@
 const Comment = require('../../models/post/commentModel');
 const Post = require('../../models/post/postingModel');
-
+const util = require('../../../config/message');
 
 module.exports = {
     create : (req,res) => {
         let {postId,detail} = req.body;
+        var commentId = req.profile._id;
 
        Post.findById(postId,async (err,result) => {
            if(err){
                res.json({msg:'not found post'})
            }
            
-           let data = {postId : await result._id , detail , commenter : req.profile._id};
+           let data = {postId : await result._id , detail , commenter : commentId};
            let comment = new Comment(data);
 
            comment.save(async (err,result) => {
@@ -31,26 +32,66 @@ module.exports = {
        });
     },
     update : (req,res) => {
-        let data = req.body;
-        let commentId = req.query._id;
+        var data = req.body;
+        var commentId = req.query._id;
+        var CommenterID = req.profile._id;
 
-        Comment.findByIdAndUpdate(commentId,data,(err,result) => {
+        Comment.findById(commentId,(err,result) => {
             if(err){
-                return res.status(400).json({msg : "something error"})
+                console.log(err);
+                res.status(500).json(util.getMsg(50004));
             }else{
-                return res.status(200).json({msg:"updated"})
+
+                if(result !== void 0){
+                    if(CommenterID == result.commenter){
+                        result.updateOne(data).exec((err,res) => {
+                            if(err){
+                                console.log(err);
+                                res.status(500).json(util.getMsg(50004));
+                            }else{
+                                res.status(200).json(util.getMsg(200))
+                            }
+                        });
+                    }else{
+                        res.status(401).json(util.getMsg(40103));
+                    }
+                }else{
+                    res.status(404).json(util.getMsg(40401));
+                }
+                
             }
         });
+        
     },
     delete : (req,res) => {
-        let commentId = req.query._id;
-        Comment.findByIdAndDelete(commentId,(err,result) => {
+        var commentId = req.query._id;
+        var CommenterID = req.profile._id;
+        
+        Comment.findById(commentId).exec((err,result) => {
             if(err){
-                return res.status(400).json({msg : "not found _id"})
+                console.log(err);
+                res.status(404).json(util.getMsg(40401));
             }else{
-                return res.status(200).json({msg:"deleted"})
+
+            if(result !== void 0){
+                if(CommenterID == result.commenter){
+                    result.remove((err,doc) =>{
+                        if(err){
+                            console.log(err)
+                            res.status(500).json(util.getMsg(50005));
+                        }else{
+                            res.status(200).json(util.getMsg(200));
+                        }
+                    });
+                }else{
+                    res.status(401).json(util.getMsg(40103));
+                }
+            }else{
+                res.status(404).json(util.getMsg(40401));
+            }   
             }
         });
+
     },
 
 
