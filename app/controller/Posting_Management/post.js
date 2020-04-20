@@ -132,12 +132,15 @@ module.exports = {
         .exec((err,result) => {
             if(err){
                 res.status(400).json({msg:'not found'});
-            }
-            var object = util.getMsg(200);
+            }else{
+                var object = util.getMsg(200);
             object.data = result;
-            res.status(200).json(object)
+            res.status(200).json(object);
+            }
+            
         });
         } catch (error) {
+            console.log(error)
             res.status(400).json(util.getMsg(40401));
         }
         
