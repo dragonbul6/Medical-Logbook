@@ -126,14 +126,17 @@ module.exports = {
         try {
             let postId = req.query._id;;
 
-        Post.findById(postId,(err,result) => {
+        Post.findById(postId)
+        .populate('comment')
+        .populate('commenter')
+        .exec((err,result) => {
             if(err){
                 res.status(400).json({msg:'not found'});
             }
             var object = util.getMsg(200);
             object.data = result;
             res.status(200).json(object)
-        })
+        });
         } catch (error) {
             res.status(400).json(util.getMsg(40401));
         }
@@ -141,3 +144,4 @@ module.exports = {
     },
 
 }
+
