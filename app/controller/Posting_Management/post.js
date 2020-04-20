@@ -53,7 +53,7 @@ module.exports = {
                     console.log(err);
                     res.status(500).json(util.getMsg(50001));
                 }else{
-                    if(result){
+                    if(result !== void 0){
                         if(PosterId == result.student_id){
                             result.updateOne(data).exec((err,doc) => {
                                 if(err){
@@ -66,6 +66,8 @@ module.exports = {
                         }else{
                             res.status(401).json(util.getMsg(40103));
                         }
+                    }else{
+                        res.status(404).json(util.getMsg(40402));
                     }
                 }
             });
@@ -145,6 +147,23 @@ module.exports = {
         }
         
     },
+    approval : (req,res) => {
+        try {
+            var id = req.query._id;
+
+            Post.findByIdAndUpdate(id,{approval:true}).exec((err,result) => {
+                if(err){
+                    console.log(err);
+                    res.status(500).json(util.getMsg(50001));
+                }else{
+                    res.status(200).json(util.getMsg(200));
+                }
+            })
+        } catch (error) {
+            console.log(error)
+            res.status(400).json(util.getMsg(40401));
+        }
+    }
 
 }
 

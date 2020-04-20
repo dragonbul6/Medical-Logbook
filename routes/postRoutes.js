@@ -15,6 +15,7 @@ module.exports = (app) => {
     app.get(path+"",Post.getSpecific);
     app.put(path+"update/",helper.verifyToken,Post.update);
     app.delete(path+"delete/",helper.verifyToken,Post.delete);
+    app.put(path+"approval/",Post.approval);
 
         //Comments Routes;
     app.post(pathComments+"create",helper.verifyToken,Comment.create);
