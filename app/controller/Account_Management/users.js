@@ -264,7 +264,7 @@ exports.resetPassword = (req,res) => {
     }
 }
 
-exports.addStudentInAdvisorProfile = (req,res) => {
+exports.addStudentInAdvisorProfile = async (req,res,next) => {
     
     
     try {
@@ -274,22 +274,25 @@ exports.addStudentInAdvisorProfile = (req,res) => {
 
         for (const studentId of arrayStudentId) {
 
-                userModel.findByIdAndUpdate(id,{$push:{"advisorInfo.advisor_studentCase" : studentId}},(err,result) => {
+                await userModel.findByIdAndUpdate(id,{$push:{"advisorInfo.advisor_studentCase" : studentId}},(err,result) => {
                     if(err){
                         console.log(err)
                         res.status(500).json(util.getMsg(50004));
                     }else{
                         var query = {"studentInfo.student_advisorId" : result._id};
-                        userModel.findByIdAndUpdate(studentId,query,(err,stResult) => {
+                        
+                        userModel.findByIdAndUpdate(studentId,query)
+                        .exec(async (err,stResult) => {
                             if(err){
                                 console.log(err)
-                            }else{
-                                res.status(200).json(util.getMsg(200));
+                                res.status(500).json(util.getMsg(50004));
                             }
                         });   
                     }
                 });      
         }
+
+                        res.status(200).json(util.getMsg(200));
     } catch (error) {
         res.status(403).json(util.getMsg(40300));
     }
