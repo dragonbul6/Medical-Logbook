@@ -13,17 +13,23 @@ exports.pushNotify = (req,res) => {
             if(err){
                 console.log(err)
             }else{
-                               
+                              
                     var status = result.advisorInfo.receiving;
                     if (status) {
                         var token = result.advisorInfo.deviceToken;
                         var id = req.body.newPostId;
-                        helper.pushNotification(token,id);
-                        res.status(200).json(msg.getMsg(200));
+                        req.body.id = id;
+                        req.body.token = token;
+                        next();
                     }else{
-                        res.status(200).json(msg.getMsg(200));
+                    var msge = msg.getMsg(200);
+                    msge.description = "ทำรายการเรียบร้อย และอาจารย์ไม่ได้เปิดใช้งาน notifcation"
+                    console.log("[Expo-push_notification]",msg.getMsg(40401));
+                    res.status(200).json(msge);
                     }
-
+                    
+                
+                
             }  
  
         })

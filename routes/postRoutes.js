@@ -1,7 +1,7 @@
 const Post = require('../app/controller/Posting_Management/post');
 const Comment = require('../app/controller/Posting_Management/comment');
 const Hospital = require('../app/controller/Hospital_Management/hospital')
-
+const Notification = require('../app/controller/Notification/Notification')
 //middleware
 const middleware = require('../helper/middleware/post');
 const helper = require('../helper/middleware/checkAuth');
@@ -12,7 +12,7 @@ module.exports = (app) => {
     const pathComments = '/api/comment/';
 
         //Post Routes;
-    app.post(path+"create",helper.verifyToken,Post.create,middleware.pushNotify);
+    app.post(path+"create",helper.verifyToken,Post.create,middleware.pushNotify,Notification.push);
     app.get(path+"all",Post.getall);
     app.get(path+"",Post.getSpecific);
     app.put(path+"update/",helper.verifyToken,Post.update);

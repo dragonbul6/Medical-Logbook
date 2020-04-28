@@ -130,6 +130,15 @@ let expo = new Expo();
             
             
         },
-        push : (token,id) => exports.pushNotification(token,id)
+        push : (req,res) => {
+
+            var id = req.body.id;
+            var token = req.body.token;
+
+            res.status(200).json(msg.getMsg(200));
+            exports.pushNotification(token,id)
+            
+            
+        }
     }
 
