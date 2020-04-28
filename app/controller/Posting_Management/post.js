@@ -5,8 +5,6 @@ const util = require('../../../config/message');
 module.exports = {
     create : (req,res,next) => { 
         
-       
-
         try {
             var student_id = req.profile._id;
             var nameAuther = req.profile.studentInfo.student_name;
@@ -14,37 +12,39 @@ module.exports = {
             
             if(hosid == void 0){
                 res.status(400).json({"msgTh" : "ผู้ใช้ไม่ได้ลงทะเบียนโรงพยาบาล จึงไม่สามารถโพสเคสได้ โปรดติดต่อแอดมิน" , "status" : 400 , "msgEn" : "User have not allow to post,please contact admin"})
+            }else{
+                var data = {
+                    poster : nameAuther,
+                    student_id : student_id,
+                    Category : req.body.Category,
+                    Problem : req.body.Problem,
+                    Problem_list : req.body.Problem_list,
+                    Discussion : req.body.Discussion,
+                    Diagnosis : req.body.Diagnosis,
+                    Examination : req.body.Examination,
+                    PatientProfile : {
+                        name : req.body.PatientProfile.name,
+                        HN : req.body.PatientProfile.HN,
+                        Age : req.body.PatientProfile.Age
+                    },
+                    Location : hosid
+                };
+    
+                let post = new Post(data);
+                post.student_id = student_id;
+                
+                post.save((err,result) => {
+                    if(err){
+                        console.log("[post creating]",err)
+                    }
+                    else{
+                        req.body.newPostId = result._id;
+                        next();
+                    }
+                });
             }
 
-            var data = {
-                poster : nameAuther,
-                student_id : student_id,
-                Category : req.body.Category,
-                Problem : req.body.Problem,
-                Problem_list : req.body.Problem_list,
-                Discussion : req.body.Discussion,
-                Diagnosis : req.body.Diagnosis,
-                Examination : req.body.Examination,
-                PatientProfile : {
-                    name : req.body.PatientProfile.name,
-                    HN : req.body.PatientProfile.HN,
-                    Age : req.body.PatientProfile.Age
-                },
-                Location : hosid
-            };
-
-            let post = new Post(data);
-            post.student_id = student_id;
             
-            post.save((err,result) => {
-                if(err){
-                    console.log("[post creating]",err)
-                }
-                else{
-                    req.body.newPostId = result._id;
-                    next();
-                }
-            });
 
         } catch (error) {
             console.log(error)

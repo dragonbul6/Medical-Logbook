@@ -24,7 +24,6 @@ exports.pushNotify = (req,res) => {
                     }else{
                     var msge = msg.getMsg(200);
                     msge.description = "ทำรายการเรียบร้อย และอาจารย์ไม่ได้เปิดใช้งาน notifcation"
-                    console.log("[Expo-push_notification]",msg.getMsg(40401));
                     res.status(200).json(msge);
                     }
                     
