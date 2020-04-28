@@ -20,13 +20,8 @@ exports.pushNotify = (req,res) => {
                         var id = req.body.newPostId;
                         helper.pushNotification(token,id);
                         res.status(200).json(msg.getMsg(200));
-                    }else{
-                        console.log(`Advisor not recieve notification`);
-                        res.status(200).json(msg.getMsg(200));
                     }
-                    
-                
-                
+
             }  
  
         })
