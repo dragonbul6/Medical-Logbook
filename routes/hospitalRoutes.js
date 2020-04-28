@@ -8,5 +8,5 @@ module.exports = (app) => {
     app.put(path+`update/`,hospitalController.update);
     app.delete(path+`delete/`,hospitalController.delete);
     app.post(path+`create`,hospitalController.create);
-    app.put(path+`Hos_addStudent/`,checker.hospitalCheckIdStudent,hospitalController.addStudentinHospital);
+    app.put(path+`addStudent/`,checker.hospitalCheckIdStudent,hospitalController.addStudentinHospital);
 }
