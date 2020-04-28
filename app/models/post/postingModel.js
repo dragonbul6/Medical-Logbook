@@ -15,11 +15,11 @@ let PostingSchema = new Schema({
     currentTime : {type: String,default: moment().format("dddd, MMMM Do YYYY, h:mm:ss a")},
     Date : {type:Date,default:Date.now},
     Diagnosis : {type:String,default:null},
-    Category : {type:String,default:null},
+    Category : {type:Schema.Types.ObjectId , ref:'Category'},
     Problem_list : {type:String,default:null},
-    Problem : {type:String,default:null},
+    Problem : {type:Schema.Types.ObjectId , ref:'Problems'},
     Discussion : {type:String,default:null},
-    Location : {type:String,default:null},
+    Location : {type:Schema.Types.ObjectId , ref:'Hospital'},
     comment:[{type:Schema.Types.ObjectId, ref:'Comment'}]
 
 });

@@ -1,5 +1,6 @@
 const Hospital = require('../../models/hospital/hospitalModel');
-
+const User = require('../../models/user/ีuserModel');
+const util = require('../../../config/message');
 module.exports = {
     create : (req,res,next)=>{
         let data = req.body;
@@ -39,7 +40,11 @@ module.exports = {
         })
     },
     getall : (req,res) => {
-        Hospital.find({},(err,doc) => {
+        Hospital
+        .find({})
+        .populate('studentList')
+        .populate('postList')
+        .exec((err,doc) => {
             if(err){
                 res.status(400).json({msg:'not found'});
             }
@@ -47,14 +52,97 @@ module.exports = {
         })
     },
     getSpecific : (req,res) => {
-        let hosid = req.query._id;;
+        let hosid = req.query._id;
 
-        Hospital.findById(hosid,(err,doc) => {
+        Hospital.findById(hosid)
+        .populate('studentList')
+        .populate('postList')
+        .exec((err,doc) => {
             if(err){
                 res.status(400).json({msg:'not found'});
             }
             res.status(200).json(doc)
         })
+    },
+    addStudentinHospital : (req,res) => {
+        try {
+            var id = req.query._id;
+            var arrayStudentId = req.body.student_id;
+            
+            Hospital.findById(id).exec((err,result) => {
+                
+                if(err){
+                    res.status(500).json(util.getMsg(50004));
+                }else{
+                    if(result !== void 0){
+    
+                        var query = {"studentList" : arrayStudentId}
+                        
+                        result.updateOne(query)
+                        .exec((err,doc) => {
+                            if(err){
+                                res.status(500).json(util.getMsg(50004));
+                            }else{
+                                var queryStudent = {"studentInfo.student_hospital" : id}
+                               
+                                User.find({_id : {$in: arrayStudentId}})
+                                .update(queryStudent,(err,doc2) =>{
+                                    if(err){
+                                        console.log(err)
+                                    }else{
+                                        res.status(200).json(util.getMsg(200));
+                                    }
+                                });
+    
+                            }
+                        });
+
+                    }else{
+                        res.status(500).json(util.getMsg(50004));
+                    }
+                }
+
+            })
+        } catch (error) {
+            res.status(403).json(util.getMsg(40300));
+        }
+        
+    },
+    addPostIdinHospital : (req,res) => {
+        try {
+            var hosId = req.profile.studentInfo.student_hospital;
+            var postId = req.postid;
+
+            var newArray = [];
+            
+
+            Hospital.findById(hosId)
+            .exec((err,result) => {
+                if(err){
+                    console.log(err)
+                    res.status(500).json(util.getMsg(50004));
+                }else{
+                    
+                    newArray = result.postList;
+                    newArray.push(postId);
+                    var query = {"postList" : newArray}
+
+                    result.updateOne(query)
+                    .exec((err,doc) => {
+                        if(err){
+                            console.log(err)
+                            res.status(500).json(util.getMsg(50004));
+                        }else{
+                            res.status(200).json(util.getMsg(200));
+                        }
+                    })
+                   
+                }
+            })
+
+        } catch (error) {
+            res.status(403).json(util.getMsg(40300));
+        }
     }
 
 };

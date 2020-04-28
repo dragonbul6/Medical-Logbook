@@ -1,6 +1,8 @@
 const jwt = require('jwt-simple');
 const Indicator = require('../../config/keyJWT');
 const UserSchema = require('../../app/models/user/ีuserModel');
+const Hospital = require('../../app/models/hospital/hospitalModel');
+const Post = require('../../app/models/post/postingModel');
 const util = require('../../config/message');
 
 
@@ -74,5 +76,43 @@ module.exports = {
             res.status(400).json(util.getMsg(40300));
         }
     },
+    checkHosIdtoPOSTApproval : (req,res,next) => {
+        try {
+            var id = req.query._id;
+            Post.findById(id).exec((err,result) => {
+                if(err){
+                    console.log(err)
+                    res.status(500).json(util.getMsg(50004));
+                }else{
+                    if(result !== void 0){
+
+                        var student_id = result.student_id;
+                        
+                        UserSchema.findById(student_id).exec((err,doc) => {
+                            if(err){
+                                console.log(err)
+                                res.status(500).json(util.getMsg(50004));
+                            }else{
+                                if(doc !== void 0){
+                                    req.profile = doc;
+                                    next();
+                                    
+                                }else{
+                                    res.status(404).json(util.getMsg(40402));
+                                }
+                            }
+                        })
+
+                    }else{
+                        res.status(404).json(util.getMsg(40401));
+                    }
+                }
+            })
+
+
+        } catch (error) {
+            res.status(400).json(util.getMsg(40300));
+        }
+    }
     
 };

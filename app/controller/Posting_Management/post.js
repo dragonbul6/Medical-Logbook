@@ -5,10 +5,17 @@ const util = require('../../../config/message');
 module.exports = {
     create : (req,res,next) => { 
         
+       
+
         try {
             var student_id = req.profile._id;
             var nameAuther = req.profile.studentInfo.student_name;
+            var hosid = req.profile.studentInfo.student_hospital;
             
+            if(hosid == void 0){
+                res.status(400).json({"msgTh" : "ผู้ใช้ไม่ได้ลงทะเบียนโรงพยาบาล จึงไม่สามารถโพสเคสได้ โปรดติดต่อแอดมิน" , "status" : 400 , "msgEn" : "User have not allow to post,please contact admin"})
+            }
+
             var data = {
                 poster : nameAuther,
                 student_id : student_id,
@@ -22,7 +29,8 @@ module.exports = {
                     name : req.body.PatientProfile.name,
                     HN : req.body.PatientProfile.HN,
                     Age : req.body.PatientProfile.Age
-                }
+                },
+                Location : hosid
             };
 
             let post = new Post(data);
@@ -147,7 +155,7 @@ module.exports = {
         }
         
     },
-    approval : (req,res) => {
+    approval : (req,res,next) => {
         try {
             var id = req.query._id;
 
@@ -156,7 +164,8 @@ module.exports = {
                     console.log(err);
                     res.status(500).json(util.getMsg(50001));
                 }else{
-                    res.status(200).json(util.getMsg(200));
+                    req.postid = id;
+                    next();
                 }
             })
         } catch (error) {

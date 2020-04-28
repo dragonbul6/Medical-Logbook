@@ -17,7 +17,8 @@ let UserSchema = new Schema({
                 }],
                 student_advisorId:{type:Schema.Types.ObjectId, ref : 'User',default:null},
                 student_id:{type:String,default:null},
-                student_year : {type:String,default:null}
+                student_year : {type:String,default:null},
+                student_hospital : {type:Schema.Types.ObjectId, ref : 'Hospital',default:null}
                         },
         advisorInfo : {
                     advisor_name : {type:String,default:null},
