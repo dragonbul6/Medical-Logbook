@@ -141,6 +141,8 @@ module.exports = {
         Post.findById(postId)
         .populate('comment')
         .populate('commenter')
+        .populate('Location')
+        .populate('Problem').populate('Category')
         .exec((err,result) => {
             if(err){
                 res.status(400).json({msg:'not found'});
