@@ -51,9 +51,11 @@ module.exports = {
         Problems.findById(pId,(err,doc) => {
             if(err){
                 res.json({status:false,msg:err})
+            }else{
+                res.status(200).json(doc)
             }
 
-            res.status(200).json(doc)
+            
         })
     }
     
