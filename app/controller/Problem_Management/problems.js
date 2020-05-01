@@ -32,8 +32,10 @@ module.exports = {
         Problems.findByIdAndDelete(pId,(err,doc) => {
                 if(err){
                     res.status(400).json({msg:err});
+                }else{
+                    res.status(200).json({msg:'delete '+doc._id});
                 }
-                res.status(200).json({msg:'delete '+doc._id});
+                
             
         });
     },
@@ -41,8 +43,10 @@ module.exports = {
         Problems.find({},(err,doc) => {
             if(err){
                 res.json({status:false,msg:err});
+            }else{
+                res.status(200).json(doc);
             }
-            res.status(200).json(doc);
+            
         });
     },
     getOne : (req,res) => {
