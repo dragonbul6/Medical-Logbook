@@ -169,6 +169,7 @@ module.exports = {
                     res.status(500).json(util.getMsg(50001));
                 }else{
                     req.postid = id;
+                    req.student_id = result.student_id;
                     next();
                 }
             })

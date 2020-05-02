@@ -56,20 +56,15 @@ module.exports = {
                     console.log(err);
                     res.status(500).json(util.getMsg(50002));
                 }else{
-                    if(result !== void 0){
+                    if(result){
                         var currentArray = result.studentList;
-                        
-                            
+
                             for (const xid of student_id) {
                                 currentArray.push(xid)
                             }
                             var arrResult = currentArray.filter((item,index) => currentArray.indexOf(item) === index);
                             req.body.student_id = arrResult;
                             next();
-                        
-                            
-                        
-                    
                 }else{
                     res.status(404).json(util.getMsg(40401));
                 } 

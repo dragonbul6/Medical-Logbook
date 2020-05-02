@@ -108,7 +108,7 @@ module.exports = {
         }
         
     },
-    addPostIdinHospital : (req,res) => {
+    addPostIdinHospital : (req,res,next) => {
         try {
             var hosId = req.profile.studentInfo.student_hospital;
             var postId = req.postid;
@@ -133,7 +133,7 @@ module.exports = {
                             console.log(err)
                             res.status(500).json(util.getMsg(50004));
                         }else{
-                            res.status(200).json(util.getMsg(200));
+                           next();
                         }
                     })
                    

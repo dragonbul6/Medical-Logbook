@@ -17,10 +17,14 @@ module.exports = {
                try {
                 if(err) return res.status(500).json(util.getMsg(50000));
                 
+                if(doc){
                     var data = doc;
                     req.profile = data;
+                    nex();
+                }else{
+                    res.status(401).json(util.getMsg(401));
+                }
 
-                nex();
                } catch (error) {
                 res.status(404).json(util.getMsg(40402));  
                }

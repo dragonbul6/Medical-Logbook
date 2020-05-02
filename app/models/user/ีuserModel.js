@@ -11,6 +11,7 @@ let UserSchema = new Schema({
         role:{type:String,default:null},
         studentInfo:{
                 student_name : {type:String,default:null},
+                student_exp : {type:Number,default:0},
                 student_goals : [{
                     goalDetail:{type:String,default:null},
                     goalStatus:{type:Boolean,default:false}
