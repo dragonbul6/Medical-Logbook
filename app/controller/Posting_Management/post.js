@@ -61,7 +61,7 @@ module.exports = {
                     console.log(err);
                     res.status(500).json(util.getMsg(50001));
                 }else{
-                    if(result !== void 0){
+                    if(result){
                         if(PosterId == result.student_id){
                             result.updateOne(data).exec((err,doc) => {
                                 if(err){
@@ -95,7 +95,7 @@ module.exports = {
                 console.log(err);
                 res.status(500).json(util.getMsg(50001));
             }else{
-                if(result !== void 0){
+                if(result){
                    if(PosterId == result.student_id){
                     result.remove((err,doc) => {
                         if(err){
@@ -147,7 +147,7 @@ module.exports = {
             if(err){
                 res.status(400).json({msg:'not found'});
             }else{
-                var object = util.getMsg(200);
+            var object = util.getMsg(200);
             object.data = result;
             res.status(200).json(object);
             }

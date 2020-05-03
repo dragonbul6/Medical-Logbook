@@ -88,8 +88,7 @@ module.exports = {
                     console.log(err)
                     res.status(500).json(util.getMsg(50004));
                 }else{
-                    if(result !== void 0){
-
+                    if(result){
                         var student_id = result.student_id;
                         
                         UserSchema.findById(student_id).exec((err,doc) => {
@@ -106,7 +105,6 @@ module.exports = {
                                 }
                             }
                         })
-
                     }else{
                         res.status(404).json(util.getMsg(40401));
                     }

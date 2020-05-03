@@ -13,7 +13,8 @@ exports.pushNotify = (req,res) => {
             if(err){
                 console.log(err)
             }else{
-                              
+                            
+                if(result){
                     var status = result.advisorInfo.receiving;
                     if (status) {
                         var token = result.advisorInfo.deviceToken;
@@ -26,10 +27,12 @@ exports.pushNotify = (req,res) => {
                     msge.description = "ทำรายการเรียบร้อย และอาจารย์ไม่ได้เปิดใช้งาน notifcation"
                     res.status(200).json(msge);
                     }
-                    
-                
-                
-            }  
+                }else{        
+                    res.status(403).json({code: 40302,  description: 'นักศึกษาไม่มีอาจารย์' });
+                }
+            
+        }
+          
  
         })
         

@@ -84,7 +84,7 @@ exports.DashboardInfo_All = (req,res) => {
             console.log(err);
             res.status(500).json(msg.getMsg(50002));
         }else{ 
-            if(result.length > 0){
+            if(result){
 
                 var chunkRatio = [];
                 var allCase = [];
@@ -92,7 +92,7 @@ exports.DashboardInfo_All = (req,res) => {
                 result.forEach(value => {
                     var name = value.hospitalName;
                     var cases = value.postList;
-                    if(cases.length !== 0){
+                    if(cases.length > 0){
                         var obj = getRatio(cases,name);
                        chunkRatio.push(obj.result);
                        allCase.push(obj.problemArr);
