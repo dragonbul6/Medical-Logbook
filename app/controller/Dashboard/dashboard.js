@@ -24,8 +24,7 @@ const msg = require('../../../config/message');
         });
 
         result.problem = problem;
-        
-        
+
     }else{
         result.name = name;
         result.problem = null;
@@ -46,24 +45,28 @@ function countCase(object,name) {
 function mergeAndcount(arr) {
     
     var temp = [];
-    
+    var result = []
 
-    for (let x = 0; x < arr.length; x++) {
+    if(arr.length > 0){
+        for (let x = 0; x < arr.length; x++) {
 
-        var length = arr[x].length;
-       
-        for (let y = 0; y < length; y++) {
-            
-            temp.push(arr[x][y]);
+            var length = arr[x].length;
+           
+            for (let y = 0; y < length; y++) {
+                
+                temp.push(arr[x][y]);
+                
+            }
             
         }
+    
         
+        temp.filter((item,index) => temp.indexOf(item) === index).map((item) => {
+            result.push(Object.assign({name:item , ratio : Number( (temp.filter((el) => el === item).length / temp.length).toFixed(2) ) }))
+        })
     }
 
-    var result = []
-    temp.filter((item,index) => temp.indexOf(item) === index).map((item) => {
-        result.push(Object.assign({name:item , ratio : Number( (temp.filter((el) => el === item).length / temp.length).toFixed(2) ) }))
-    })
+   
 
     return result;
 }
@@ -99,9 +102,8 @@ exports.DashboardInfo_All = (req,res) => {
                     }
                 });
 
-                
-
-                var allRatio = mergeAndcount(allCase);
+                var allRatio = []
+                allRatio = mergeAndcount(allCase);
 
                 var chunk = msg.getMsg(200);
                 chunk.data = {specific:chunkRatio,all:allRatio};
