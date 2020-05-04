@@ -76,7 +76,7 @@ exports.Oauth =  (req,res,next) => {
         if(err){
             next(err);
         }else{
-            if(userInfo !== void 0){
+            if(userInfo){
                 if(bcrypt.compareSync(password,userInfo.password)){
                     const PAYLOAD = userInfo;
                     const token = jwt.encode(PAYLOAD,IndicateKey.KEY);
