@@ -115,6 +115,42 @@ module.exports = {
         } catch (error) {
             res.status(400).json(util.getMsg(40300));
         }
-    }
+    },
+    checkStudentAtHospital: async (req,res,next) => {
+        try {
+            var student_id = req.body.student_id;
+            
+            if(student_id.length !== 0){
+                
+              UserSchema.find({role : 'student'})
+              .select('_id')
+              .exec((err,result) => {
+                if(err){
+                    console.log(err)
+                }else{
+                    
+                   student_id.map((item,index) => {
+                        if(result.filter((el) => el._id == item)){
+                            student_id.splice(index,1);
+                        }
+                    });
+
+                    req.body.student_id = student_id
+                    next();
+                    
+                }
+              })
+              
+            }else{
+                
+                res.status(403).json(util.getMsg(40300));
+            }
+
+        } catch (error) {
+            console.log(error)
+            res.status(400).json(util.getMsg(40300));
+        }
+    },
+
     
 };
