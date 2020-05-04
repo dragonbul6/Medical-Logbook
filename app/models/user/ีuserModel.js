@@ -12,10 +12,7 @@ let UserSchema = new Schema({
         studentInfo:{
                 student_name : {type:String,default:null},
                 student_exp : {type:Number,default:0},
-                student_goals : [{
-                    goalDetail:{type:String,default:null},
-                    goalStatus:{type:Boolean,default:false}
-                }],
+                student_tasks : {type: Schema.Types.ObjectId, ref : 'Achievement',default:null},
                 student_advisorId:{type:Schema.Types.ObjectId, ref : 'User',default:null},
                 student_id:{type:String,default:null},
                 student_year : {type:String,default:null},

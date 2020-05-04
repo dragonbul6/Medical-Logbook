@@ -17,6 +17,7 @@ const mobileRoutes = require('./routes/mobileRoutes');
 const categoryRoutes = require('./routes/categoryRoutes');
 const postRoutes = require('./routes/postRoutes');
 const dashboardRoutes = require('./routes/dashboardRoutes');
+const achievementRoutes = require('./routes/achievementRoutes');
 
 //helpers
 const app = express();
@@ -36,6 +37,7 @@ mobileRoutes(app);
 categoryRoutes(app);
 postRoutes(app);
 dashboardRoutes(app);
+achievementRoutes(app);
 
 //database connection
 dbConnection();

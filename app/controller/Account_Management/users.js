@@ -324,25 +324,28 @@ exports.addStudentInAdvisorProfile = (req,res) => {
 exports.gainXp = (req,res) => {
     try {
         var student_id = req.student_id;
-
-        userModel.findById(student_id)
+        var addition = req.exp;
+        userModel
+        .findById(student_id)
         .exec((err,result) => {
             if(err){
                 console.log(err);
                 res.status(500).json(util.getMsg(50004));
             }else{
-                var exp = result.studentInfo.student_exp;
-                
-                if(exp !== void 0){
-                    result.updateOne({"studentInfo.student_exp" : exp+1}).exec((err,doc) => {
-                        if(err){
-                            console.log(err);
-                            res.status(500).json(util.getMsg(50004));
-                        }else{
-                            res.status(200).json(util.getMsg(200));
-                        }
-                    })
-                }else{
+                if(result){
+                    var exp = result.studentInfo.student_exp;
+                    if(exp !== void 0){
+                        result.updateOne({"studentInfo.student_exp" : (exp+1) + addition}).exec((err,doc) => {
+                            if(err){
+                                console.log(err);
+                                res.status(500).json(util.getMsg(50004));
+                            }else{
+                                res.status(200).json(util.getMsg(200));
+                            }
+                        });
+                    }
+                }
+                else{
                     res.status(403).json(util.getMsg(40304));
                 }
             }

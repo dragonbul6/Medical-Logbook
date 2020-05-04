@@ -170,6 +170,7 @@ module.exports = {
                 }else{
                     req.postid = id;
                     req.student_id = result.student_id;
+                    req.problem_id = result.Problem;
                     next();
                 }
             })
