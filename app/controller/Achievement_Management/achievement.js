@@ -205,6 +205,24 @@ module.exports = {
         } catch (error) {
             res.status(400).json(util.getMsg(40401));
         }
+    },
+    getAll :(req,res) => {
+        try {
+            Task.find({}).exec((err,result) => {
+                if(err){
+                    console.log(err);
+                    res.status(500).json(util.getMsg(50002)); 
+                }else{
+                    if(result){
+                        res.status(200).json(result)
+                    }else{
+                        res.status(404).json(util.getMsg(40401));
+                    }
+                }
+            })
+        } catch (error) {
+            res.status(400).json(util.getMsg(40401));
+        }
     }
 
     
