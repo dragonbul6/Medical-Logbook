@@ -184,6 +184,27 @@ module.exports = {
         } catch (error) {
             res.status(400).json(util.getMsg(40401));
         }
+    },
+    getbyStudent : (req,res) => {
+        try {
+            var id = req.query._id;
+
+            Task.find({student_id : id}).exec((err,result) => {
+                if(err){
+                    console.log(err);
+                    res.status(500).json(util.getMsg(50002)); 
+                }else{
+                    if(result.length > 0){
+                        res.status(200).json(result[0])
+                    }else{
+                        res.status(404).json(util.getMsg(40401));
+                    }
+                }
+            })
+
+        } catch (error) {
+            res.status(400).json(util.getMsg(40401));
+        }
     }
 
     
