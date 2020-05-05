@@ -76,6 +76,50 @@ module.exports = {
             res.status(400).json(util.getMsg(40401));
         }
     },
+    update_detail : (req,res) => {
+
+        try {
+            
+            var taskid = req.query._id;
+
+            var updateItem = {task : req.body.task , quantity : req.body.quantity , problem_id : req.body.problem_id , exp : req.body.exp}
+            Task.findById(taskid).exec((err,result) => {
+                if(err){
+                    console.log(err)
+                    res.status(500).json(util.getMsg(50001));
+                }else{
+                    if(result){
+                        
+                        var task_target = result.tasks;
+
+                        task_target.map((item,i) => {
+                            if(item.problem_id == updateItem.problem_id){
+                                task_target[i].task = updateItem.task;
+                                task_target[i].quantity = updateItem.quantity;
+                                task_target[i].exp = updateItem.exp;
+                            }
+                        });
+
+                        result.updateOne({tasks : task_target}).exec((err,doc) => {
+                            if(err){
+                                console.log(err);
+                                res.status(500).json(util.getMsg(50001));
+                            }else{
+                                res.status(200).json(util.getMsg(200));
+                            }
+                        })
+
+                    }else{
+                        res.status(404).json(util.getMsg(40401));
+                    }
+                }
+            })
+
+        } catch (error) {
+            res.status(400).json(util.getMsg(40401));
+        }
+
+    },
     delete : (req,res) => {
         try {
             var achievementId = req.query._id;

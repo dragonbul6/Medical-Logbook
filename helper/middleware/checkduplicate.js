@@ -45,7 +45,7 @@ module.exports = {
         try {
             var student_id = req.body.student_id;
             var id = req.query._id;
-
+            
             
             if(student_id.length == 0){
                 res.status(403).json(util.getMsg(40300));
@@ -64,6 +64,7 @@ module.exports = {
                             }
                             var arrResult = currentArray.filter((item,index) => currentArray.indexOf(item) === index);
                             req.body.student_id = arrResult;
+                            
                             next();
                 }else{
                     res.status(404).json(util.getMsg(40401));
@@ -75,6 +76,44 @@ module.exports = {
 
         } catch (error) {
              res.status(403).json(util.getMsg(40300));
+        }
+    },
+    checkPostId : (req,res,next) => {
+        try {
+            
+            var id = req.query._id;
+            var hosId = req.hosid;
+
+            HospitalSchema.findById(hosId).exec((err,result) => {
+                if(err){
+                    console.log(err);
+                    res.status(500).json(util.getMsg(50002));
+                }else{
+                    if(result){
+                        var postlist = result.postList;
+                        var duplicate = [];
+                        
+                        postlist.map((item) => {
+                            if(item == id){
+                                duplicate.push(item);
+                            }
+                        });
+
+                        if(duplicate.length > 0){
+                            res.status(403).json(util.getMsg(40301));
+                        }else{
+                            next();
+                        }
+
+                    }else{
+                        res.status(404).json(util.getMsg(40401));
+                    }
+                }
+            });
+
+
+        } catch (error) {
+            res.status(403).json(util.getMsg(40300));
         }
     }
 };

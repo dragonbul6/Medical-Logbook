@@ -96,8 +96,9 @@ module.exports = {
                                 console.log(err)
                                 res.status(500).json(util.getMsg(50004));
                             }else{
-                                if(doc !== void 0){
+                                if(doc){
                                     req.profile = doc;
+                                    req.hosid = doc.studentInfo.student_hospital; 
                                     next();
                                     
                                 }else{
@@ -120,7 +121,7 @@ module.exports = {
         try {
             var student_id = req.body.student_id;
             
-            if(student_id.length !== 0){
+            if(student_id.length > 0){
                 
               UserSchema.find({role : 'student'})
               .select('_id')
@@ -128,14 +129,20 @@ module.exports = {
                 if(err){
                     console.log(err)
                 }else{
+
+                    var target = [];
+                    var filted = [];
+
+                    result.map((item) => {
+                        target.push(item._id);
+                    })
                     
                    student_id.map((item,index) => {
-                        if(result.filter((el) => el._id == item)){
-                            student_id.splice(index,1);
-                        }
+                       filted.push(target.find((a) => item == a))
                     });
-
-                    req.body.student_id = student_id
+                    
+            
+                    req.body.student_id = filted.filter((item) => item !== void 0)
                     next();
                     
                 }

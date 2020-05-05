@@ -6,6 +6,7 @@ module.exports = (app) => {
 
     app.post(path+'/create/',controller.create);
     app.put(path+'/update/',controller.update);
+    app.put(path+'/update_detail/',controller.update_detail);
     app.delete(path+'/delete/',controller.delete);
     app.get(path+"/",controller.getbyStudent);
     app.get(path+'/all',controller.getAll);

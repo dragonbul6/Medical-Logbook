@@ -7,7 +7,8 @@ module.exports = (app) => {
     app.get(path,hospitalController.getSpecific);
     app.get(path+`all`,hospitalController.getall);
     app.put(path+`update/`,hospitalController.update);
+    app.put(path+'deleteStudent/',hospitalController.deleteStudent,hospitalController.updateinStudentProfile);
     app.delete(path+`delete/`,hospitalController.delete);
     app.post(path+`create`,hospitalController.create);
-    app.put(path+`addStudent/`,checkuser.checkStudentAtHospital,checker.hospitalCheckIdStudent,hospitalController.addStudentinHospital);
+    app.put(path+`addStudent/`,checkuser.checkStudentAtHospital,checker.hospitalCheckIdStudent,hospitalController.addStudentinHospital,hospitalController.updateinStudentProfile);
 }

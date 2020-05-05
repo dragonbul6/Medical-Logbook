@@ -7,6 +7,7 @@ const achievement = require('../app/controller/Achievement_Management/achievemen
 //middleware
 const middleware = require('../helper/middleware/post');
 const helper = require('../helper/middleware/checkAuth');
+const checkDuplicate = require('../helper/middleware/checkduplicate');
 
 
 module.exports = (app) => {
@@ -19,7 +20,7 @@ module.exports = (app) => {
     app.get(path+"",Post.getSpecific);
     app.put(path+"update/",helper.verifyToken,Post.update);
     app.delete(path+"delete/",helper.verifyToken,Post.delete);
-    app.put(path+"approval/",helper.checkHosIdtoPOSTApproval,Post.approval,Hospital.addPostIdinHospital,achievement.calculateXp,user.gainXp);
+    app.put(path+"approval/",helper.checkHosIdtoPOSTApproval,checkDuplicate.checkPostId,Post.approval,Hospital.addPostIdinHospital,achievement.calculateXp,user.gainXp);
 
         //Comments Routes;
     app.post(pathComments+"create",helper.verifyToken,Comment.create);
