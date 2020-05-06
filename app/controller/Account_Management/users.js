@@ -324,7 +324,11 @@ exports.addStudentInAdvisorProfile = (req,res) => {
 exports.gainXp = (req,res) => {
     try {
         var student_id = req.student_id;
-        var addition = req.exp;
+        var addition = 0;
+        if(req.exp){
+            addition = req.exp;
+        }
+        
         userModel
         .findById(student_id)
         .exec((err,result) => {

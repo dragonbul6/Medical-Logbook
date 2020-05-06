@@ -173,7 +173,7 @@ module.exports = {
                     console.log(err);
                     res.status(500).json(util.getMsg(50005));
                 }else{
-                    if(result){
+                    if(result.length > 0){
                         var achievement = result[0].tasks;
                         var id = result[0]._id;
                         var taskList = achievement;
@@ -214,12 +214,8 @@ module.exports = {
                                 next();
                             }
                         })
-                        
-                        
-                        
-
                     }else{
-                        res.status(404).json(util.getMsg(40401));
+                       next();
                     }
                 }
             })
