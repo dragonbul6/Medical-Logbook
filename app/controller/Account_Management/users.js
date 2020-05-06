@@ -117,13 +117,17 @@ exports.LoginAdvisor = (req,res) =>{
                     if(bcrypt.compareSync(password,userInfo.password)){
                         const PAYLOAD = userInfo;
                         const token = jwt.encode(PAYLOAD,IndicateKey.KEY);
-                        const time = Date.now();
-                        userModel.findByIdAndUpdate({_id:userInfo._id},{lastlogin:time},async (err,doc) => {
+
+                        userModel.findById(userInfo._id)
+                        .populate('advisorInfo.advisor_studentCase')
+                        .exec((err,doc) => {
                             if(err){
                                 next(err);
+                            }else{
+                                res.status(200).json({message:"Login Successful!",data:{user:doc,token:token,_id:userInfo._id}});
                             }
                         });
-                        res.status(200).json({message:"Login Successful!",data:{user:userInfo,token:token,_id:userInfo._id}});
+                        
                     }else{
                         res.json({status:"error", message: "Invalid username/password!!!", data:null});
                     }
