@@ -11,7 +11,7 @@ module.exports = {
                 tasks : [{task : 'get approve case by advisor',quantity:5,problem_id:999,exp:2}]
             }
             var tasks = new Task(data);
-            var x = [];
+            
 
             tasks.save((err,result) => {
                 if(err){

@@ -1,7 +1,8 @@
 
 
 const UserSchema = require('../../app/models/user/ีuserModel');
-const HospitalSchema = require('../../app/models/hospital/hospitalModel')
+const HospitalSchema = require('../../app/models/hospital/hospitalModel');
+const Achievement = require('../../app/models/achievement/achievement');
 const util = require('../../config/message');
 
 
@@ -114,6 +115,27 @@ module.exports = {
 
         } catch (error) {
             res.status(403).json(util.getMsg(40300));
+        }
+    },
+    checkStudentId_Achievement : (req,res,next) => {
+        try {
+            var student_id = req.query._id;
+            Achievement.find({student_id : student_id})
+            .exec((err,result) => {
+                if(err){
+                    console.log(err);
+                    res.status(500).json(util.getMsg(50002));
+                }else{
+                    if(result.length > 0){
+                        res.status(403).json(util.getMsg(40301));
+                    }else{
+                        next();
+                    }
+                }
+            })
+            
+        } catch (error) {
+            res.status(403).json(util.getMsg(40300)); 
         }
     }
 };
