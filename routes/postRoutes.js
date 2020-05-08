@@ -17,6 +17,7 @@ module.exports = (app) => {
         //Post Routes;
     app.post(path+"create",helper.verifyToken,Post.create,middleware.pushNotify,Notification.push);
     app.get(path+"all",Post.getall);
+    app.get(path+"allM/",Post.getAll_Mobile);
     app.get(path+"",Post.getSpecific);
     app.put(path+"update/",helper.verifyToken,Post.update);
     app.delete(path+"delete/",helper.verifyToken,Post.delete);

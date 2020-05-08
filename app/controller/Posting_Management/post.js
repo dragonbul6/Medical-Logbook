@@ -134,6 +134,28 @@ module.exports = {
 
         });
     },
+    getAll_Mobile : (req,res) => {
+        try {
+            var student_id = req.query._id;
+
+            Post.find({student_id : student_id})
+            .populate("Problem")
+            .populate("Location")
+            .exec((err,result) => {
+                if(err){
+                    console.log(err);
+                    res.status(500).json(util.getMsg(50001));
+                }else{
+                    if(result.length > 0){
+                        res.status(200).json(result)
+                    }
+                }
+            })
+            
+        } catch (error) {
+            res.status(400).json(util.getMsg(40401));
+        }
+    },
     getSpecific : (req,res) => {
         try {
             let postId = req.query._id;;
