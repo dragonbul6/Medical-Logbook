@@ -31,9 +31,7 @@ module.exports = {
                     Location : hosid
                 };
 
-                if( typeof data.PatientProfile.Age == 'string'){
-                    res.status(500).json({msg : "อายุต้องเป็นตัวเลขสิครับ"})
-                }else{
+                
                     let post = new Post(data);
                     post.student_id = student_id;
                     
@@ -46,7 +44,7 @@ module.exports = {
                             next();
                         }
                     });
-                }
+                
     
                 
             }
