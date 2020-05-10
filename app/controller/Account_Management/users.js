@@ -129,7 +129,7 @@ exports.LoginAdvisor = (req,res) =>{
                         });
                         
                     }else{
-                        res.json({status:"error", message: "Invalid username/password!!!", data:null});
+                        res.status(404).json({status:"error", message: "Invalid username/password!!!", data:null});
                     }
                 }else{
                     res.status(401).json(util.getMsg(40103));

@@ -10,6 +10,7 @@ module.exports = {
             var nameAuther = req.profile.studentInfo.student_name;
             var hosid = req.profile.studentInfo.student_hospital;
             
+            
             if(hosid == void 0){
                 res.status(400).json({"msgTh" : "ผู้ใช้ไม่ได้ลงทะเบียนโรงพยาบาล จึงไม่สามารถโพสเคสได้ โปรดติดต่อแอดมิน" , "status" : 400 , "msgEn" : "User have not allow to post,please contact admin"})
             }else{
@@ -29,19 +30,25 @@ module.exports = {
                     },
                     Location : hosid
                 };
+
+                if( typeof data.PatientProfile.Age == 'string'){
+                    res.status(500).json({msg : "อายุต้องเป็นตัวเลขสิครับ"})
+                }else{
+                    let post = new Post(data);
+                    post.student_id = student_id;
+                    
+                    post.save((err,result) => {
+                        if(err){
+                            console.log("[post creating]",err)
+                        }
+                        else{
+                            req.body.newPostId = result._id;
+                            next();
+                        }
+                    });
+                }
     
-                let post = new Post(data);
-                post.student_id = student_id;
                 
-                post.save((err,result) => {
-                    if(err){
-                        console.log("[post creating]",err)
-                    }
-                    else{
-                        req.body.newPostId = result._id;
-                        next();
-                    }
-                });
             }
 
             

@@ -3,7 +3,7 @@ var msg = require('../../config/message');
 var User = require('../../app/models/user/ีuserModel');
 
 
-exports.pushNotify = (req,res) => {
+exports.pushNotify = (req,res,next) => {
     try {
         var id = req.profile.studentInfo.student_advisorId;
         

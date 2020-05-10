@@ -102,6 +102,7 @@ let expo = new Expo();
                 var _id = req.profile._id;
             User.findById(_id,(err,user) => {
                 if(err){
+                   console.log(err)
                     res.status(400).json(err)
                 }
                 let arr = user.advisorInfo.deviceToken;
@@ -122,6 +123,8 @@ let expo = new Expo();
                 });
 
                 exports.pushNotification(arr,null);
+
+                res.status(200).json(msg.getMsg(200));
             
             });
             } catch (error) {
@@ -135,9 +138,9 @@ let expo = new Expo();
             var id = req.body.id;
             var token = req.body.token;
 
-            res.status(200).json(msg.getMsg(200));
-            exports.pushNotification(token,id)
             
+            exports.pushNotification(token,id)
+            res.status(200).json(msg.getMsg(200));
             
         }
     }
