@@ -33,7 +33,7 @@ let expo = new Expo();
                 messages.push({
                     to: pushToken,
                     sound: 'default',
-                    body: 'มีคน post: '+id,
+                    body: 'นักศึกษา '+id.studentInfo.student_name+' ได้โพสเคสใหม่!',
                     data: { withSome: 'data' },
                 });
             }
@@ -135,11 +135,11 @@ let expo = new Expo();
         },
         push : (req,res) => {
 
-            var id = req.body.id;
+            var profile = req.profile;
             var token = req.body.token;
 
             
-            exports.pushNotification(token,id)
+            exports.pushNotification(token,profile)
             res.status(200).json(msg.getMsg(200));
             
         }
