@@ -137,5 +137,37 @@ module.exports = {
         } catch (error) {
             res.status(403).json(util.getMsg(40300)); 
         }
+    },
+    problem_task : (req,res,next) => {
+        try {
+            var achievement = req.query._id;
+            var data = req.body;
+
+            Achievement.findById(achievement)
+            .exec((err,result) => {
+                if(err){
+                    console.log(err);
+                    res.status(500).json(util.getMsg(50002));
+                }else{
+                    if(result){
+                        var tasks = result.tasks;
+
+                        var duplicate = tasks.filter((item) => item.problem_id == data.problem_id);
+
+                        if(duplicate.length > 0){
+                            res.status(403).json(util.getMsg(40301));  
+                        }else{
+                            next();
+                        }
+
+                    }else{
+                        res.status(404).json(util.getMsg(40401));  
+                    }
+                }
+            })
+
+        } catch (error) {
+            res.status(403).json(util.getMsg(40300)); 
+        }
     }
 };

@@ -121,6 +121,47 @@ module.exports = {
         }
 
     },
+    deletetask : (req,res) => {
+        try {
+            var id = req.query._id;
+            var problem_id = req.body.problem_id;
+
+            Task.findById(id).exec((err,result) => {
+                if(err){
+                    console.log(err);
+                    res.status(500).json(util.getMsg(50005));
+                }else{
+                    if(result){
+                        var tasks = result.tasks;
+                       
+                        problem_id.map((item) => {
+                            tasks.filter((value,i) => {
+                                if(item == value.problem_id){
+                                    tasks.splice(i,1);
+                                }
+                            });
+                        })
+
+                        result.updateOne({tasks:tasks},(err,any) => {
+                            if(err){
+                                console.log(err);
+                                res.status(500).json(util.getMsg(50005));
+                            }else{
+                                res.status(200).json(util.getMsg(200));
+                            }
+                        })
+
+                    }else{
+                        res.status(404).json(util.getMsg(40401));
+                    }
+                }
+
+            })
+
+        } catch (error) {
+            res.status(400).json(util.getMsg(40401));
+        }
+    },
     delete : (req,res) => {
         try {
             var achievementId = req.query._id;
